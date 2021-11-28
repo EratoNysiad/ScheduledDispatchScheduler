@@ -97,7 +97,7 @@ function love.draw()
 	drawLeftMenu()
 	drawBottomMenu(178,28)
 	
-	textToPrint = editData[1]..','..editData[2]..','..timeTableData[editData[1]][editData[2]]
+	--textToPrint = editData[1]..','..editData[2]..','..timeTableData[editData[1]][editData[2]]..','..editData[2]%4
 	love.graphics.print(5+tonumber("-20"), 140, 346)
 	love.graphics.print(textToPrint.."_", 12, 245+28)
 	
