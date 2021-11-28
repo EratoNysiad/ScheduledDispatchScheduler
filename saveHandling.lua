@@ -1,12 +1,12 @@
 function saveMasterFile()
 	local masterFileData = ""
 	for i=1, (numTimeTables+1)*6 do
-		local currentBit = masterFile[i-1]
+		local currentBit = timeTableData[0][i-1]
 		if currentBit == nil then
 			textToPrint = i
 		else
 			masterFileData = masterFileData..currentBit
-			if masterFile[i]~=nil then
+			if timeTableData[0][i]~=nil then
 				if i%6 == 0 then
 					masterFileData = masterFileData .. '\n'
 				else

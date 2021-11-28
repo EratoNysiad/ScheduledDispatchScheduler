@@ -35,11 +35,11 @@ function drawGraph()
 		love.graphics.line( 252, 10+stationPos[i], 252+graphX, 10+stationPos[i] )
 	end
 	--Draw lines
-	love.graphics.setColor( lineColour[tonumber(masterFile[currentTimeTable*6+2])] )
+	love.graphics.setColor( lineColour[tonumber(timeTableData[0][currentTimeTable*6+2])] )
 	love.graphics.setLineWidth( 2 )
-	local startTime = math.floor(tonumber(masterFile[currentTimeTable*6+3])/100)*60+tonumber(masterFile[currentTimeTable*6+3])%100
-	local repeatTime = math.floor(tonumber(masterFile[currentTimeTable*6+4])/100)*60+tonumber(masterFile[currentTimeTable*6+4])%100
-	local maxTime = math.floor(tonumber(masterFile[currentTimeTable*6+5])/100)*60+tonumber(masterFile[currentTimeTable*6+5])%100
+	local startTime = math.floor(tonumber(timeTableData[0][currentTimeTable*6+3])/100)*60+tonumber(timeTableData[0][currentTimeTable*6+3])%100
+	local repeatTime = math.floor(tonumber(timeTableData[0][currentTimeTable*6+4])/100)*60+tonumber(timeTableData[0][currentTimeTable*6+4])%100
+	local maxTime = math.floor(tonumber(timeTableData[0][currentTimeTable*6+5])/100)*60+tonumber(timeTableData[0][currentTimeTable*6+5])%100
 	local timeWidth = graphX/(deltaTime*60)
 	
 	for j=-1, 1 do
@@ -99,6 +99,6 @@ function drawGraph()
 	end
 	
 	
-	love.graphics.setColor( lineColour[tonumber(masterFile[currentTimeTable*6+2])] )
+	love.graphics.setColor( lineColour[tonumber(timeTableData[0][currentTimeTable*6+2])] )
 
 end

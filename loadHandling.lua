@@ -1,4 +1,4 @@
---Initialise masterFile
+--Initialise timeTableData[0]
 function isLineOOB(num)
 	if num == 0 then
 		return numTimeTables
@@ -11,7 +11,7 @@ end
 
 function createMasterFile()
 	local masterFileRaw, masterFileSize = love.filesystem.read( 'ttdata/ttmf.dat' )
-	masterFile = {''} --LuA dOeSnT rEqUiRe InItIaLiSaTiOn. Fuck you, it does. Or at least here
+	local masterFile = {''} --LuA dOeSnT rEqUiRe InItIaLiSaTiOn. Fuck you, it does. Or at least here
 	local tableX = 0
 	for i=1, masterFileSize do
 		local currentCharacter = masterFileRaw:sub(i,i)
@@ -28,12 +28,13 @@ function createMasterFile()
 			return
 		end
 	end
+	timeTableData[0] = masterFile
 	numTimeTables = (tableX + 1)/6 -1
 	currentTimeTable = isLineOOB(currentTimeTable)
 end
 
 function loadTimeTable(i)
-	local ttFileRaw, ttFileSize = love.filesystem.read( 'ttdata/'.. masterFile[i*6] ..'.dat' )
+	local ttFileRaw, ttFileSize = love.filesystem.read( 'ttdata/'.. timeTableData[0][i*6] ..'.dat' )
 	local ttFile = {} --LuA dOeSnT rEqUiRe InItIaLiSaTiOn. Fuck you, it does. Or at least here
 	local tableX = 0
 	for j=1, ttFileSize do

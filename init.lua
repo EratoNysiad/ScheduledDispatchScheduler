@@ -28,7 +28,7 @@ function love.load()
 	spriteSaveButton = love.graphics.newImage("saveIcon.png")
 	spriteLoadButton = love.graphics.newImage("loadIcon.png")
 	
-	textToPrint= "test"
+	textToPrint= ""
 	
 	love.graphics.setLineWidth( 1 )
 	love.graphics.setLineStyle("rough")
@@ -41,6 +41,7 @@ function love.load()
 	maxX = 6
 	timeTableData = {}
 	numStops = {}
+	editData = {0,0}
 	
 	currentTimeTable=2
 	reloadData()

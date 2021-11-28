@@ -19,6 +19,23 @@ end
 
 function love.mousepressed(x, y, button)
 	if button == 1 then
+		local menuOriginY = 50+12*numStops[currentTimeTable]
+		-- Selecting data to edit
+		if y >= menuOriginY+13 and y <= menuOriginY+25 and x >= 99 and x <= 178 then
+			editData = {0, currentTimeTable*6+3}
+		elseif y >= menuOriginY+26 and y <= menuOriginY+37 and x >= 99 and x <= 178 then
+			editData = {0, currentTimeTable*6+4}
+		elseif y >= menuOriginY+38 and y <= menuOriginY+49 and x >= 99 and x <= 178 then
+			editData = {0, currentTimeTable*6+5}
+		end
+		if y >= 51 and y <= menuOriginY and x >= 14 and x <= 165 then
+			editData = {currentTimeTable,4+math.floor((x-14)/38)+4*math.floor((y-51)/12)}
+		elseif y >= 51 and y <= menuOriginY and x >= 0 and x <= 13 then
+			editData = {currentTimeTable,4+4*math.floor((y-51)/12)}
+		end
+		if y >= 23 and y <= 39 and x <= 151 then
+			editData = {0, currentTimeTable*6+1}
+		end
 		-- Change Time Axis
 		if x >= 308 and x <= 321 then
 			if y >= windowHeight-14 then
@@ -40,11 +57,11 @@ function love.mousepressed(x, y, button)
 		-- Change Timetable Colour
 		if y >= 159 and y <= 171 then
 			if x >= 154 and x <= 165 then
-				masterFile[currentTimeTable*6+2] = masterFile[currentTimeTable*6+2] - 1
-				masterFile[currentTimeTable*6+2] = tonumber(checkRollover(masterFile[currentTimeTable*6+2]-1,16)+1)
+				timeTableData[0][currentTimeTable*6+2] = timeTableData[0][currentTimeTable*6+2] - 1
+				timeTableData[0][currentTimeTable*6+2] = tonumber(checkRollover(timeTableData[0][currentTimeTable*6+2]-1,16)+1)
 			elseif x >= 166 and x <= 178 then
-				masterFile[currentTimeTable*6+2] = masterFile[currentTimeTable*6+2] + 1
-				masterFile[currentTimeTable*6+2] = tonumber(checkRollover(masterFile[currentTimeTable*6+2]-1,16)+1)
+				timeTableData[0][currentTimeTable*6+2] = timeTableData[0][currentTimeTable*6+2] + 1
+				timeTableData[0][currentTimeTable*6+2] = tonumber(checkRollover(timeTableData[0][currentTimeTable*6+2]-1,16)+1)
 			end
 		end
 		-- Change Timetable
@@ -57,6 +74,7 @@ function love.mousepressed(x, y, button)
 				currentTimeTable = isLineOOB(currentTimeTable)
 			end
 		end
+		-- Save/load
 		if y <= 22 and x >= 89 and x <= 178 then
 			reloadData()
 		end
@@ -68,8 +86,9 @@ end
 
 
 function love.update(dt)
+	
 	backspaceHandler()
-	--textToPrint = love.filesystem.read( 'ttdata/ttmf.dat' )--( 'ttdata/'.. masterFile[6] ..'.dat' )
+	--textToPrint = love.filesystem.read( 'ttdata/ttmf.dat' )--( 'ttdata/'.. timeTableData[0][6] ..'.dat' )
 end
 
 
@@ -78,7 +97,7 @@ function love.draw()
 	drawLeftMenu()
 	drawBottomMenu(178,28)
 	
-	textToPrint=numTimeTables
+	textToPrint = editData[1]..','..editData[2]..','..timeTableData[editData[1]][editData[2]]
 	love.graphics.print(5+tonumber("-20"), 140, 346)
 	love.graphics.print(textToPrint.."_", 12, 245+28)
 	

@@ -60,7 +60,7 @@ function drawLeftMenu()
 	love.graphics.line( 154, menuOriginY+48, 154, menuOriginY+60)
 	love.graphics.line( 166, menuOriginY+48, 166, menuOriginY+60)
 	--Line name box
-	love.graphics.setColor( lineColour[tonumber(masterFile[currentTimeTable*6+2])] )
+	love.graphics.setColor( lineColour[tonumber(timeTableData[0][currentTimeTable*6+2])] )
 	love.graphics.rectangle( "fill", 3, 25, 145, 12 )
 	love.graphics.rectangle( "fill", 126, menuOriginY+51, 26, 8 )
 	--Table
@@ -69,10 +69,33 @@ function drawLeftMenu()
 	love.graphics.line( 91, 52, 91, 50+12*numStations)
 	love.graphics.line( 129, 52, 129, 50+12*numStations)
 	for i=1, numStations do
-		love.graphics.print(timeTableData[currentTimeTable][i*4], 2, 39+i*12)
-		love.graphics.print(timeTableData[currentTimeTable][i*4+1], 54, 39+i*12)
-		love.graphics.print(timeTableData[currentTimeTable][i*4+2], 92, 39+i*12)
-		love.graphics.print(timeTableData[currentTimeTable][i*4+3], 130, 39+i*12)
+		if editData[1] == currentTimeTable and math.floor(editData[2]/4) == i then
+			if editData[2] == i*4 then
+				love.graphics.print(timeTableData[currentTimeTable][i*4]..'_', 2, 39+i*12)
+			else
+				love.graphics.print(timeTableData[currentTimeTable][i*4], 2, 39+i*12)
+			end
+			if editData[2] == i*4+1 then
+				love.graphics.print(timeTableData[currentTimeTable][i*4+1]..'_', 54, 39+i*12)
+			else
+				love.graphics.print(timeTableData[currentTimeTable][i*4+1], 54, 39+i*12)
+			end
+			if editData[2] == i*4+2 then
+				love.graphics.print(timeTableData[currentTimeTable][i*4+2]..'_', 92, 39+i*12)
+			else
+				love.graphics.print(timeTableData[currentTimeTable][i*4+2], 92, 39+i*12)
+			end
+			if editData[2] == i*4+3 then
+				love.graphics.print(timeTableData[currentTimeTable][i*4+3]..'_', 130, 39+i*12)
+			else
+				love.graphics.print(timeTableData[currentTimeTable][i*4+3], 130, 39+i*12)
+			end
+		else
+			love.graphics.print(timeTableData[currentTimeTable][i*4], 2, 39+i*12)
+			love.graphics.print(timeTableData[currentTimeTable][i*4+1], 54, 39+i*12)
+			love.graphics.print(timeTableData[currentTimeTable][i*4+2], 92, 39+i*12)
+			love.graphics.print(timeTableData[currentTimeTable][i*4+3], 130, 39+i*12)
+		end
 		if i~=numStations then
 			love.graphics.setColor( 148/255,148/255,148/255)
 			love.graphics.line( 1, 51+12*i, 165, 51+12*i)
@@ -93,7 +116,11 @@ function drawLeftMenu()
 	love.graphics.setColor( 0,0,0)
 	love.graphics.print("Save", 24, 5)
 	love.graphics.print("Reload", 115, 5)
-	love.graphics.print(masterFile[currentTimeTable*6+1], 4, 25)
+	if editData[1] == 0 and editData[2] == currentTimeTable*6+1 then
+		love.graphics.print(timeTableData[0][currentTimeTable*6+1]..'_', 4, 25)
+	else
+		love.graphics.print(timeTableData[0][currentTimeTable*6+1], 4, 25)
+	end
 	love.graphics.print(">", 167, 25)
 	love.graphics.print("<", 153, 25)
 	love.graphics.print("Station", 2, 39)
@@ -107,11 +134,29 @@ function drawLeftMenu()
 	love.graphics.print("First train:", 2, menuOriginY+13)
 	love.graphics.print("Repeat every:", 2, menuOriginY+25)
 	love.graphics.print("No later than:", 2, menuOriginY+37)
-	love.graphics.print(masterFile[currentTimeTable*6+3], 101, menuOriginY+13)
-	love.graphics.print(masterFile[currentTimeTable*6+4], 101, menuOriginY+25)
-	love.graphics.print(masterFile[currentTimeTable*6+5], 101, menuOriginY+37)
+	if editData[1] == 0 then
+		if editData[2] == currentTimeTable*6+3 then
+			love.graphics.print(timeTableData[0][currentTimeTable*6+3]..'_', 101, menuOriginY+13)
+		else
+			love.graphics.print(timeTableData[0][currentTimeTable*6+3], 101, menuOriginY+13)
+		end
+		if editData[2] == currentTimeTable*6+4 then
+			love.graphics.print(timeTableData[0][currentTimeTable*6+4]..'_', 101, menuOriginY+25)
+		else
+			love.graphics.print(timeTableData[0][currentTimeTable*6+4], 101, menuOriginY+25)
+		end
+		if editData[2] == currentTimeTable*6+5 then
+			love.graphics.print(timeTableData[0][currentTimeTable*6+5]..'_', 101, menuOriginY+37)
+		else
+			love.graphics.print(timeTableData[0][currentTimeTable*6+5], 101, menuOriginY+37)
+		end
+	else
+		love.graphics.print(timeTableData[0][currentTimeTable*6+3], 101, menuOriginY+13)
+		love.graphics.print(timeTableData[0][currentTimeTable*6+4], 101, menuOriginY+25)
+		love.graphics.print(timeTableData[0][currentTimeTable*6+5], 101, menuOriginY+37)
+	end
 	love.graphics.print("Colour:", 2, menuOriginY+49)
-	love.graphics.print(lineColourNames[tonumber(masterFile[currentTimeTable*6+2])], 52, menuOriginY+49)
+	love.graphics.print(lineColourNames[tonumber(timeTableData[0][currentTimeTable*6+2])], 52, menuOriginY+49)
 	love.graphics.print(">", 168, menuOriginY+49)
 	love.graphics.print("<", 156, menuOriginY+49)
 	
