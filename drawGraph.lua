@@ -89,16 +89,16 @@ function drawGraph()
 	for i=1, numStops[currentTimeTable] do
 		love.graphics.setColor( 0,0,0)
 		love.graphics.line( 250, 10+stationPos[i], 247, 10+stationPos[i] )
-		love.graphics.printf(timeTableData[currentTimeTable][i*4], 99-2, -5+9+stationPos[i], 150, "right")
+		love.graphics.printf(timeTableData[currentTimeTable][i*4], 96, 4+stationPos[i], 150, "right")
 	end
 	for i=0, deltaTime do
 		love.graphics.setColor( 0,0,0)
 		local printTime = (timeLimits[1]+i)%24
 		love.graphics.printf(printTime, 241+math.ceil(i*graphX/deltaTime), 8+graphY, 20, "center")
+		love.graphics.printf(printTime, 241+math.ceil(i*graphX/deltaTime), -1, 20, "center")
 	end
 	
 	
 	love.graphics.setColor( lineColour[tonumber(masterFile[currentTimeTable*6+2])] )
 
-	textToPrint = startTime-maxTime
 end
