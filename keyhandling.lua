@@ -19,11 +19,12 @@ end
 function backspaceHandler()
 	backspacePressed = love.keyboard.isDown("backspace")
 	backspaceTimer = love.timer.getTime()
-	--textToPrint = tostring(tostring(timeTableData[editData[1]][editData[2]]):len())
 	if backspacePressed then
 		local currentLength = tostring(timeTableData[editData[1]][editData[2]]):len()
 		if currentLength == 1 then
-			timeTableData[editData[1]][editData[2]] = 0
+			if not backspaceStillPressed or backspaceTimer - backspaceStartTime > backspaceCounter*0.12 then
+				timeTableData[editData[1]][editData[2]] = 0
+			end
 		else
 			--Upon first press, just use it once
 			if not backspaceStillPressed then
@@ -42,5 +43,4 @@ function backspaceHandler()
 		backspaceStillPressed = false
 	end
 	windowWidth, windowHeight = love.window.getMode()
-
 end
