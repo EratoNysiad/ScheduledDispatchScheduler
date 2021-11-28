@@ -34,6 +34,19 @@ function love.mousepressed(x, y, button)
 				timeLimits[1] = timeLimits[1]+is24Plus(timeLimits[1])
 			end
 		end
+		
+		if y >= 23 and y <= 39 then
+			if x >= 150 and x <= 163 then
+				currentTimeTable = currentTimeTable - 1
+				currentTimeTable = isLineOOB(currentTimeTable)
+			elseif x >= 164 and x <= 178 then
+				currentTimeTable = currentTimeTable + 1			
+				currentTimeTable = isLineOOB(currentTimeTable)
+			end
+		end
+		if y <= 22 and x >= 89 and x <= 178 then
+			reloadData()
+		end
 	end
 end
 

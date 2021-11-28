@@ -1,4 +1,14 @@
 --Initialise masterFile
+function isLineOOB(num)
+	if num == 0 then
+		return numTimeTables
+	elseif num > numTimeTables then
+		return 1
+	else
+		return num
+	end
+end
+
 function createMasterFile()
 	local masterFileRaw, masterFileSize = love.filesystem.read( 'ttdata/ttmf.dat' )
 	masterFile = {''} --LuA dOeSnT rEqUiRe InItIaLiSaTiOn. Fuck you, it does. Or at least here
@@ -19,6 +29,7 @@ function createMasterFile()
 		end
 	end
 	numTimeTables = (tableX + 1)/6 -1
+	currentTimeTable = isLineOOB(currentTimeTable)
 end
 
 function loadTimeTable(i)
@@ -43,8 +54,14 @@ function loadTimeTable(i)
 	timeTableData[i] = ttFile
 	numStops[i] = (tableX + 1)/4 -1
 	
-	
 	stationLimits = {1,numStops[currentTimeTable]}
+end
+
+function reloadData()
+	createMasterFile()
+	for i=1, numTimeTables do
+		loadTimeTable(i)
+	end
 end
 
 function love.load()
@@ -72,8 +89,10 @@ function love.load()
 	lineColour[14] = {183/255,159/255,119/255}
 	lineColour[15] = {147/255,147/255,147/255}
 	lineColour[15] = {216/255,216/255,216/255}
+	lineColourNames = {"Dark Blue", "Pale Green", "Pink", "Yellow", "Red", "Light Blue", "Green", "Dark Green", "Blue", "Cream", "Mauve", "Purple", "Orange", "Brown", "Grey", "White"}
 	
 	spriteSaveButton = love.graphics.newImage("saveIcon.png")
+	spriteLoadButton = love.graphics.newImage("loadIcon.png")
 	
 	textToPrint= "test"
 	
@@ -89,12 +108,9 @@ function love.load()
 	timeTableData = {}
 	numStops = {}
 	
-	
-	createMasterFile()
-	for i=1, numTimeTables do
-		loadTimeTable(i)
-	end
-	currentStation = 1
 	currentTimeTable=2
+	reloadData()
+	
+	
 	timeLimits = {5,20}
 end
