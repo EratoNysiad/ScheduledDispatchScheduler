@@ -17,7 +17,7 @@ end
 
 function love.mousepressed(x, y, button)
 	if button == 1 then
-		if x >= 371 and x <= 383 then
+		if x >= 308 and x <= 321 then
 			if y >= windowHeight-14 then
 				timeLimits[2] = timeLimits[2] - 1
 				timeLimits[2] = timeLimits[2]+is24Plus(timeLimits[2])
@@ -25,7 +25,7 @@ function love.mousepressed(x, y, button)
 				timeLimits[1] = timeLimits[1] - 1
 				timeLimits[1] = timeLimits[1]+is24Plus(timeLimits[1])
 			end
-		elseif x >= 384 and x <= 398 then
+		elseif x >= 322 and x <= 335 then
 			if y >= windowHeight-14 then
 				timeLimits[2] = timeLimits[2] + 1
 				timeLimits[2] = timeLimits[2]+is24Plus(timeLimits[2])
@@ -45,10 +45,9 @@ end
 
 
 function love.draw()
-	--drawBlankGraph()
 	drawGraph()
-	--drawTable()
-	
+	drawLeftMenu()
+	drawBottomMenu(178,28)
 	
 	
 	--textToPrint = timeTableData[currentTimeTable][currentStation*4]

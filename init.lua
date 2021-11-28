@@ -49,7 +49,7 @@ end
 
 function love.load()
 	-- initialise game
-	love.window.setMode(720,480, {resizable=true, minwidth=620, minheight=300}) --GBA*3 screensize by default
+	love.window.setMode(720,480, {resizable=true, minwidth=558, minheight=300}) --GBA*3 screensize by default
 	love.window.setTitle( "ScheduledDispatchScheduler" ) --set name
 	--Set font
 	font = love.graphics.newImageFont("font.png", " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789:;<=>?_!\"#$%&'()*+,-./")
@@ -73,7 +73,7 @@ function love.load()
 	lineColour[15] = {147/255,147/255,147/255}
 	lineColour[15] = {216/255,216/255,216/255}
 	
-	
+	spriteSaveButton = love.graphics.newImage("saveIcon.png")
 	
 	textToPrint= "test"
 	
