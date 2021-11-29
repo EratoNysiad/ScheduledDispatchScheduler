@@ -44,8 +44,9 @@ function love.load()
 	editData = {0,0}
 	
 	currentTimeTable=2
+	timeTableFileLength = 6
+	masterFileLength = 6
 	reloadData()
 	
-	
-	timeLimits = {5,20}
+	timeLimits = {5,7}
 end

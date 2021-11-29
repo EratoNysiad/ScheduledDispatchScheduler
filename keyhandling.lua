@@ -1,12 +1,12 @@
 function love.textinput(t)
 	local allowEdit = true
-	if t == '-' and editData[1] ~= 0 and editData[2]%4 == 1 then--set distance negative
+	if t == '-' and editData[1] ~= 0 and editData[2]%timeTableFileLength == 1 then--set distance negative
 		timeTableData[editData[1]][editData[2]] = - timeTableData[editData[1]][editData[2]]
 	else
 		if tonumber(t) == nil then --not a number
-			if editData[1] == 0 and editData[2]%6 >= 3 then
+			if editData[1] == 0 and editData[2]%masterFileLength >= 3 then
 				allowEdit = false
-			elseif editData[1] ~= 0 and editData[2]%4 >= 1 then
+			elseif editData[1] ~= 0 and editData[2]%timeTableFileLength >= 1 then
 				allowEdit = false
 			end
 		end

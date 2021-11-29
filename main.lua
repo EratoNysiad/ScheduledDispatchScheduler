@@ -22,19 +22,19 @@ function love.mousepressed(x, y, button)
 		local menuOriginY = 50+12*numStops[currentTimeTable]
 		-- Selecting data to edit
 		if y >= menuOriginY+13 and y <= menuOriginY+25 and x >= 99 and x <= 178 then
-			editData = {0, currentTimeTable*6+3}
+			editData = {0, currentTimeTable*masterFileLength+3}
 		elseif y >= menuOriginY+26 and y <= menuOriginY+37 and x >= 99 and x <= 178 then
-			editData = {0, currentTimeTable*6+4}
+			editData = {0, currentTimeTable*masterFileLength+4}
 		elseif y >= menuOriginY+38 and y <= menuOriginY+49 and x >= 99 and x <= 178 then
-			editData = {0, currentTimeTable*6+5}
+			editData = {0, currentTimeTable*masterFileLength+5}
 		end
 		if y >= 51 and y <= menuOriginY and x >= 14 and x <= 165 then
-			editData = {currentTimeTable,4+math.floor((x-14)/38)+4*math.floor((y-51)/12)}
+			editData = {currentTimeTable,timeTableFileLength+math.floor((x-14)/38)+timeTableFileLength*math.floor((y-51)/12)}
 		elseif y >= 51 and y <= menuOriginY and x >= 0 and x <= 13 then
-			editData = {currentTimeTable,4+4*math.floor((y-51)/12)}
+			editData = {currentTimeTable,timeTableFileLength+timeTableFileLength*math.floor((y-51)/12)}
 		end
 		if y >= 23 and y <= 39 and x <= 151 then
-			editData = {0, currentTimeTable*6+1}
+			editData = {0, currentTimeTable*masterFileLength+1}
 		end
 		-- Change Time Axis
 		if x >= 308 and x <= 321 then
@@ -57,11 +57,11 @@ function love.mousepressed(x, y, button)
 		-- Change Timetable Colour
 		if y >= 159 and y <= 171 then
 			if x >= 154 and x <= 165 then
-				timeTableData[0][currentTimeTable*6+2] = timeTableData[0][currentTimeTable*6+2] - 1
-				timeTableData[0][currentTimeTable*6+2] = tonumber(checkRollover(timeTableData[0][currentTimeTable*6+2]-1,16)+1)
+				timeTableData[0][currentTimeTable*masterFileLength+2] = timeTableData[0][currentTimeTable*masterFileLength+2] - 1
+				timeTableData[0][currentTimeTable*masterFileLength+2] = tonumber(checkRollover(timeTableData[0][currentTimeTable*masterFileLength+2]-1,16)+1)
 			elseif x >= 166 and x <= 178 then
-				timeTableData[0][currentTimeTable*6+2] = timeTableData[0][currentTimeTable*6+2] + 1
-				timeTableData[0][currentTimeTable*6+2] = tonumber(checkRollover(timeTableData[0][currentTimeTable*6+2]-1,16)+1)
+				timeTableData[0][currentTimeTable*masterFileLength+2] = timeTableData[0][currentTimeTable*masterFileLength+2] + 1
+				timeTableData[0][currentTimeTable*masterFileLength+2] = tonumber(checkRollover(timeTableData[0][currentTimeTable*masterFileLength+2]-1,16)+1)
 			end
 		end
 		-- Change Timetable
@@ -97,7 +97,8 @@ function love.draw()
 	drawLeftMenu()
 	drawBottomMenu(178,28)
 	
-	--textToPrint = editData[1]..','..editData[2]..','..timeTableData[editData[1]][editData[2]]..','..editData[2]%4
+	--textToPrint = editData[1]..','..editData[2]..','..timeTableData[editData[1]][editData[2]]..','..editData[2]%timeTableFileLength
+	--textToPrint = stationInMain("AMG")
 	love.graphics.print(5+tonumber("-20"), 140, 346)
 	love.graphics.print(textToPrint.."_", 12, 245+28)
 	

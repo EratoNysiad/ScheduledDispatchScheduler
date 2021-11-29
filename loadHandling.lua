@@ -29,12 +29,12 @@ function createMasterFile()
 		end
 	end
 	timeTableData[0] = masterFile
-	numTimeTables = (tableX + 1)/6 -1
+	numTimeTables = (tableX + 1)/masterFileLength -1
 	currentTimeTable = isLineOOB(currentTimeTable)
 end
 
 function loadTimeTable(i)
-	local ttFileRaw, ttFileSize = love.filesystem.read( 'ttdata/'.. timeTableData[0][i*6] ..'.dat' )
+	local ttFileRaw, ttFileSize = love.filesystem.read( 'ttdata/'.. timeTableData[0][i*masterFileLength] ..'.dat' )
 	local ttFile = {} --LuA dOeSnT rEqUiRe InItIaLiSaTiOn. Fuck you, it does. Or at least here
 	local tableX = 0
 	for j=1, ttFileSize do
@@ -53,7 +53,7 @@ function loadTimeTable(i)
 		end
 	end
 	timeTableData[i] = ttFile
-	numStops[i] = (tableX + 1)/4 -1
+	numStops[i] = (tableX + 1)/timeTableFileLength -1
 	
 	stationLimits = {1,numStops[currentTimeTable]}
 end

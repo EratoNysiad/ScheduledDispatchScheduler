@@ -1,3 +1,12 @@
+function stationInMain(stationName)
+	for i=1, numStops[currentTimeTable] do
+		if stationName == timeTableData[currentTimeTable][i*timeTableFileLength] then
+			return i
+		end
+	end
+	return 0
+end
+
 function drawGraph()
 	--Figure out graph dimensions
 	local graphX, graphY 
@@ -7,7 +16,7 @@ function drawGraph()
 	local stationPos = {}
 	stationPos[0] = 0
 	for i=1, numStops[currentTimeTable] do
-		stationPos[i] = stationPos[i-1] + tonumber(timeTableData[currentTimeTable][i*4+1])
+		stationPos[i] = stationPos[i-1] + tonumber(timeTableData[currentTimeTable][i*timeTableFileLength+1])
 	end
 	local minDist = math.min(unpack(stationPos))
 	for i=1, numStops[currentTimeTable] do
@@ -35,45 +44,67 @@ function drawGraph()
 		love.graphics.line( 252, 10+stationPos[i], 252+graphX, 10+stationPos[i] )
 	end
 	--Draw lines
-	love.graphics.setColor( lineColour[tonumber(timeTableData[0][currentTimeTable*6+2])] )
 	love.graphics.setLineWidth( 2 )
-	local startTime = math.floor(tonumber(timeTableData[0][currentTimeTable*6+3])/100)*60+tonumber(timeTableData[0][currentTimeTable*6+3])%100
-	local repeatTime = math.floor(tonumber(timeTableData[0][currentTimeTable*6+4])/100)*60+tonumber(timeTableData[0][currentTimeTable*6+4])%100
-	local maxTime = math.floor(tonumber(timeTableData[0][currentTimeTable*6+5])/100)*60+tonumber(timeTableData[0][currentTimeTable*6+5])%100
 	local timeWidth = graphX/(deltaTime*60)
+	for n=1, numTimeTables do
+		local startTime = math.floor(tonumber(timeTableData[0][n*masterFileLength+3])/100)*60+tonumber(timeTableData[0][n*masterFileLength+3])%100
+		local repeatTime = math.floor(tonumber(timeTableData[0][n*masterFileLength+4])/100)*60+tonumber(timeTableData[0][n*masterFileLength+4])%100
+		local maxTime = math.floor(tonumber(timeTableData[0][n*masterFileLength+5])/100)*60+tonumber(timeTableData[0][n*masterFileLength+5])%100
 	
-	for j=-1, 1 do
-		local currentStartTime = startTime - 1440*j
-		for k=0, 200 do
-			local currentTime
-			if repeatTime == 0 then
-				currentTime = currentStartTime
-			else
-				currentTime = currentStartTime+repeatTime*k
-				if maxTime < startTime then
-					if currentTime%1440 > maxTime and currentTime%1440 < startTime then
+		love.graphics.setColor( lineColour[tonumber(timeTableData[0][n*masterFileLength+2])] )
+		for j=-1, 1 do
+			local currentStartTime = startTime - 1440*j
+			for k=0, 200 do
+				local currentTime
+				if repeatTime == 0 then
+					currentTime = currentStartTime
+				else
+					currentTime = currentStartTime+repeatTime*k
+					if maxTime < startTime then
+						if currentTime%1440 > maxTime and currentTime%1440 < startTime then
+							break
+						end
+					else
+						if currentTime%1440 > maxTime or currentTime%1440 < startTime then
+							break
+						end
+					end
+					
+				end
+				currentTime = currentTime - timeLimits[1]*60
+				--Draw lines
+				if n == currentTimeTable then
+					for i=1, numStops[n]-1 do
+						local prevTime = currentTime
+						currentTime = currentTime + tonumber(timeTableData[n][(i+1)*timeTableFileLength+2])
+						love.graphics.line( 251+(prevTime*timeWidth), 10+stationPos[i], 251+(currentTime*timeWidth), 10+stationPos[i+1] )
+						prevTime = currentTime
+						currentTime = currentTime + tonumber(timeTableData[n][(i+1)*timeTableFileLength+3])
+						love.graphics.line( 251+(prevTime*timeWidth), 10+stationPos[i+1], 251+(currentTime*timeWidth), 10+stationPos[i+1] )
+					end		
+					if repeatTime == 0 then
 						break
 					end
 				else
-					if currentTime%1440 > maxTime or currentTime%1440 < startTime then
+					for i=1, numStops[n]-1 do
+						local thisStation = stationInMain(timeTableData[n][i*timeTableFileLength])
+						local nextStation = stationInMain(timeTableData[n][(i+1)*timeTableFileLength])
+						local prevTime = currentTime
+						currentTime = currentTime + tonumber(timeTableData[n][(i+1)*timeTableFileLength+2])
+						if thisStation ~= 0 and nextStation ~= 0 then
+							love.graphics.line( 251+(prevTime*timeWidth), 10+stationPos[thisStation], 251+(currentTime*timeWidth), 10+stationPos[nextStation] )
+						end
+						prevTime = currentTime
+						currentTime = currentTime + tonumber(timeTableData[n][(i+1)*timeTableFileLength+3])
+						if thisStation ~= 0 and nextStation ~= 0 then
+							love.graphics.line( 251+(prevTime*timeWidth), 10+stationPos[nextStation], 251+(currentTime*timeWidth), 10+stationPos[nextStation] )
+						end
+					end		
+					if repeatTime == 0 then
 						break
 					end
 				end
-				
 			end
-			currentTime = currentTime - timeLimits[1]*60
-			for i=1, numStops[currentTimeTable]-1 do
-				local prevTime = currentTime
-				currentTime = currentTime + tonumber(timeTableData[currentTimeTable][(i+1)*4+2])
-				love.graphics.line( 251+(prevTime*timeWidth), 10+stationPos[i], 251+(currentTime*timeWidth), 10+stationPos[i+1] )
-				prevTime = currentTime
-				currentTime = currentTime + tonumber(timeTableData[currentTimeTable][(i+1)*4+3])
-				love.graphics.line( 251+(prevTime*timeWidth), 10+stationPos[i+1], 251+(currentTime*timeWidth), 10+stationPos[i+1] )
-			end		
-			if repeatTime == 0 then
-				break
-			end
-			
 		end
 	end
 		
@@ -89,7 +120,7 @@ function drawGraph()
 	for i=1, numStops[currentTimeTable] do
 		love.graphics.setColor( 0,0,0)
 		love.graphics.line( 250, 10+stationPos[i], 247, 10+stationPos[i] )
-		love.graphics.printf(timeTableData[currentTimeTable][i*4], 96, 4+stationPos[i], 150, "right")
+		love.graphics.printf(timeTableData[currentTimeTable][i*timeTableFileLength], 96, 4+stationPos[i], 150, "right")
 	end
 	for i=0, deltaTime do
 		love.graphics.setColor( 0,0,0)
@@ -99,6 +130,6 @@ function drawGraph()
 	end
 	
 	
-	love.graphics.setColor( lineColour[tonumber(timeTableData[0][currentTimeTable*6+2])] )
+	love.graphics.setColor( lineColour[tonumber(timeTableData[0][currentTimeTable*masterFileLength+2])] )
 
 end
