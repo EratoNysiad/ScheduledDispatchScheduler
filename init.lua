@@ -27,13 +27,15 @@ function love.load()
 	
 	spriteSaveButton = love.graphics.newImage("saveIcon.png")
 	spriteLoadButton = love.graphics.newImage("loadIcon.png")
+	spriteWarnIcon = love.graphics.newImage("warningIcon.png")
 	
 	textToPrint= ""
 	
 	love.graphics.setLineWidth( 1 )
 	love.graphics.setLineStyle("rough")
-	
+	specialButtonHeld = false
 	backspaceStillPressed = false
+	addremoveStillPressed = false
 	startTime = love.timer.getTime()
 	backspaceStartTime = 0
 	
@@ -41,7 +43,7 @@ function love.load()
 	maxX = 6
 	timeTableData = {}
 	numStops = {}
-	editData = {0,0}
+	
 	
 	currentTimeTable=2
 	timeTableFileLength = 6

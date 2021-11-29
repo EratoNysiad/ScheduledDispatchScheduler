@@ -63,4 +63,6 @@ function reloadData()
 	for i=1, numTimeTables do
 		loadTimeTable(i)
 	end
+	editData = {0,0}
+	currentStation=0
 end
