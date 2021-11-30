@@ -30,6 +30,7 @@ function drawGraph()
 	if deltaTime <= 0 then
 		deltaTime = 24 + deltaTime
 	end
+	local timeWidth = graphX/(deltaTime*60)
 	for i=0, deltaTime do
 		local printTime = (timeLimits[1]+i)%24
 		if printTime == 0 or printTime == 12 then
@@ -38,6 +39,9 @@ function drawGraph()
 			love.graphics.setColor( 48/255,48/255,48/255)
 		end
 		love.graphics.line( 251+math.ceil(i*graphX/deltaTime), 10, 251+math.ceil(i*graphX/deltaTime), 10+graphY )
+		if timeWidth >= 2 then
+			love.graphics.line( 251+math.ceil((i+0.5)*graphX/deltaTime), 10, 251+math.ceil((i+0.5)*graphX/deltaTime), 10+graphY )
+		end
 	end
 	for i=1, numStops[currentTimeTable] do
 		love.graphics.setColor( 48/255,48/255,48/255)
@@ -45,7 +49,6 @@ function drawGraph()
 	end
 	--Draw lines
 	love.graphics.setLineWidth( 2 )
-	local timeWidth = graphX/(deltaTime*60)
 	for n=1, numTimeTables do
 		local startTime = math.floor(tonumber(timeTableData[0][n*masterFileLength+3])/100)*60+tonumber(timeTableData[0][n*masterFileLength+3])%100
 		local repeatTime = math.floor(tonumber(timeTableData[0][n*masterFileLength+4])/100)*60+tonumber(timeTableData[0][n*masterFileLength+4])%100

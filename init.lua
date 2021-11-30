@@ -1,6 +1,6 @@
 function love.load()
 	-- initialise game
-	love.window.setMode(720,480, {resizable=true, minwidth=558, minheight=300}) --GBA*3 screensize by default
+	love.window.setMode(720,480, {resizable=true, minwidth=558, minheight=291}) --GBA*3 screensize by default
 	love.window.setTitle( "ScheduledDispatchScheduler" ) --set name
 	--Set font
 	font = love.graphics.newImageFont("font.png", " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789:;<=>?_!\"#$%&'()*+,-./")
