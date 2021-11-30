@@ -92,6 +92,12 @@ function love.mousepressed(x, y, button)
 			end
 		end
 		-- Open save folder
+		if y >= menuOriginY+85 and y <= menuOriginY+96 and x <= 178 then
+			addTimeTable()
+		end
+		if y >= menuOriginY+97 and y <= menuOriginY+108 and x <= 178 then
+			removeTimeTable()
+		end
 		if y >= menuOriginY+109 and y <= menuOriginY+121 and x <= 178 then
 			love.system.openURL("file://"..love.filesystem.getSaveDirectory().."/ttdata/")
 		end
@@ -103,6 +109,8 @@ function love.update(dt)
 	specialButtonHeld = love.keyboard.isDown( 'lctrl' ) or love.keyboard.isDown( 'lshift' ) or love.keyboard.isDown( 'lalt' ) or love.keyboard.isDown( 'rctrl' ) or love.keyboard.isDown( 'rshift' ) or love.keyboard.isDown( 'ralt' )
 	if editData[1] ~= 0 then
 		editData[1] = currentTimeTable
+	elseif math.floor(editData[2]/timeTableFileLength) ~= currentTimeTable then
+		editData[2] = editData[2]%timeTableFileLength + currentTimeTable*timeTableFileLength
 	end
 	backspaceHandler()
 	--textToPrint = love.filesystem.read( 'ttdata/ttmf.dat' )--( 'ttdata/'.. timeTableData[0][6] ..'.dat' )
@@ -115,7 +123,7 @@ function love.draw()
 	drawBottomMenu(178,28)
 	
 	--textToPrint = editData[1]..','..editData[2]..','..timeTableData[editData[1]][editData[2]]..','..editData[2]%timeTableFileLength
-	--textToPrint = editData[2]
+	textToPrint = timeTableData[0][masterFileLength*currentTimeTable]
 	love.graphics.print(5+tonumber("-20"), 140, 346)
 	love.graphics.print(textToPrint.."_", 12, 245+28)
 	
