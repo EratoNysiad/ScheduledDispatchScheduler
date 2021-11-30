@@ -16,7 +16,6 @@ function saveMasterFile()
 		end
 	end
 	love.filesystem.write( 'ttdata/ttmf.dat', masterFileData )
-	--textToPrint = masterFileData
 end
 
 function saveTimeTable(k)
@@ -37,7 +36,6 @@ function saveTimeTable(k)
 		end
 	end
 	love.filesystem.write( 'ttdata/'..timeTableData[0][k*masterFileLength]..'.dat', ttFileData )
-	--textToPrint = ttFileData
 end
 
 function  saveToFile()

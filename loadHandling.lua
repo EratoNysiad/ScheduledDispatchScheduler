@@ -14,7 +14,7 @@ function createMasterFile()
 	local masterFile = {''} --LuA dOeSnT rEqUiRe InItIaLiSaTiOn. Fuck you, it does. Or at least here
 	local tableX = 0
 	if masterFileRaw == nil then
-		love.filesystem.write( 'ttdata/ttmf.dat', "File,Name,Colour,Start,Repeat,End\nTT1,First line,1,515,30,2300\nTT2,Name of line 2,4,1308,60,1000\nTT3,King line the 3rd,5,500,30,2300" )
+		love.filesystem.write( 'ttdata/ttmf.dat', "File,Name,Colour,Start,Repeat,End,Turnaround\nTT1,Line Number 1,14,512,30,2300,-1\nTT2,Different name for 2,7,1230,60,1000,1\nTT3,Line3AAAA,6,504,60,2300,-1" )
 		masterFileRaw, masterFileSize = love.filesystem.read( 'ttdata/ttmf.dat' )
 	end
 	
@@ -71,8 +71,11 @@ function loadTimeTable(i)
 	end
 	timeTableData[i] = ttFile
 	numStops[i] = (tableX + 1)/timeTableFileLength -1
-	
 	stationLimits = {1,numStops[currentTimeTable]}
+	-- fix stupid bug
+	if timeTableData[0][currentTimeTable*masterFileLength+6] == tostring(1) then
+		timeTableData[0][currentTimeTable*masterFileLength+6] = 1
+	end
 end
 
 function reloadData()

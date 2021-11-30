@@ -11,7 +11,7 @@ function love.textinput(t)
 			end
 		end
 		if allowEdit then
-			if timeTableData[editData[1]][editData[2]] == 0 then
+			if timeTableData[editData[1]][editData[2]] == 0 or timeTableData[editData[1]][editData[2]] == tostring(0) then
 				timeTableData[editData[1]][editData[2]] = t
 			else
 				timeTableData[editData[1]][editData[2]] = timeTableData[editData[1]][editData[2]] .. t
@@ -26,7 +26,6 @@ function backspaceHandler()
 	if backspacePressed then
 		local currentLength = tostring(timeTableData[editData[1]][editData[2]]):len()
 		local firstChar = tostring(timeTableData[editData[1]][editData[2]]):sub(1,1)
-		textToPrint = firstChar
 		if currentLength == 1 or (currentLength == 2 and firstChar == '-') then
 			if not backspaceStillPressed or backspaceTimer - backspaceStartTime > backspaceCounter*0.12 then
 				timeTableData[editData[1]][editData[2]] = 0

@@ -77,22 +77,34 @@ function drawGraph()
 				currentTime = currentTime - timeLimits[1]*60
 				--Draw lines
 				if n == currentTimeTable then
+					local prevTime = currentTime
 					for i=1, numStops[n]-1 do
-						local prevTime = currentTime
+						prevTime = currentTime
 						currentTime = currentTime + tonumber(timeTableData[n][(i+1)*timeTableFileLength+2])
 						love.graphics.line( 251+(prevTime*timeWidth), 10+stationPos[i], 251+(currentTime*timeWidth), 10+stationPos[i+1] )
 						prevTime = currentTime
 						currentTime = currentTime + tonumber(timeTableData[n][(i+1)*timeTableFileLength+3])
 						love.graphics.line( 251+(prevTime*timeWidth), 10+stationPos[i+1], 251+(currentTime*timeWidth), 10+stationPos[i+1] )
-					end		
+					end
+					if timeTableData[0][n*masterFileLength+6] == 1 then
+						for i=numStops[n]-1, 1, -1 do
+							prevTime = currentTime
+							currentTime = currentTime + tonumber(timeTableData[n][(i)*timeTableFileLength+4])
+							love.graphics.line( 251+(prevTime*timeWidth), 10+stationPos[i+1], 251+(currentTime*timeWidth), 10+stationPos[i] )
+							prevTime = currentTime
+							currentTime = currentTime + tonumber(timeTableData[n][(i)*timeTableFileLength+5])
+							love.graphics.line( 251+(prevTime*timeWidth), 10+stationPos[i], 251+(currentTime*timeWidth), 10+stationPos[i] )
+						end
+					end
 					if repeatTime == 0 then
 						break
 					end
 				else
+					local prevTime = currentTime
 					for i=1, numStops[n]-1 do
 						local thisStation = stationInMain(timeTableData[n][i*timeTableFileLength])
 						local nextStation = stationInMain(timeTableData[n][(i+1)*timeTableFileLength])
-						local prevTime = currentTime
+						prevTime = currentTime
 						currentTime = currentTime + tonumber(timeTableData[n][(i+1)*timeTableFileLength+2])
 						if thisStation ~= 0 and nextStation ~= 0 then
 							love.graphics.line( 251+(prevTime*timeWidth), 10+stationPos[thisStation], 251+(currentTime*timeWidth), 10+stationPos[nextStation] )
@@ -102,7 +114,23 @@ function drawGraph()
 						if thisStation ~= 0 and nextStation ~= 0 then
 							love.graphics.line( 251+(prevTime*timeWidth), 10+stationPos[nextStation], 251+(currentTime*timeWidth), 10+stationPos[nextStation] )
 						end
-					end		
+					end	
+					if timeTableData[0][n*masterFileLength+6] == 1 then
+						for i=numStops[n]-1, 1, -1 do
+							local thisStation = stationInMain(timeTableData[n][i*timeTableFileLength])
+							local nextStation = stationInMain(timeTableData[n][(i+1)*timeTableFileLength])
+							prevTime = currentTime
+							currentTime = currentTime + tonumber(timeTableData[n][(i)*timeTableFileLength+4])
+							if thisStation ~= 0 and nextStation ~= 0 then
+								love.graphics.line( 251+(prevTime*timeWidth), 10+stationPos[i+1], 251+(currentTime*timeWidth), 10+stationPos[i] )
+							end
+							prevTime = currentTime
+							currentTime = currentTime + tonumber(timeTableData[n][(i)*timeTableFileLength+5])
+							if thisStation ~= 0 and nextStation ~= 0 then
+								love.graphics.line( 251+(prevTime*timeWidth), 10+stationPos[i], 251+(currentTime*timeWidth), 10+stationPos[i] )
+							end
+						end
+					end
 					if repeatTime == 0 then
 						break
 					end

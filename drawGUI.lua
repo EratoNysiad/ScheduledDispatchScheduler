@@ -1,6 +1,12 @@
 function drawLeftMenu()
 	local numStations = numStops[currentTimeTable]
+	local numStationsF = numStations
 	local menuOriginY = 50+12*numStations
+	local menuOriginYH = 48+12*(numStations-4)
+	if timeTableData[0][currentTimeTable*masterFileLength+6] == 1 then
+		numStationsF = numStations*2-1
+		menuOriginY = 50+12*numStationsF
+	end
 	--Draw boxes
 	love.graphics.setColor( 168/255,168/255,168/255)
 	love.graphics.rectangle( "fill", 0, 0, 178, windowHeight )
@@ -14,10 +20,10 @@ function drawLeftMenu()
 	love.graphics.rectangle( "fill", 91, 40, 36, 10 )
 	love.graphics.rectangle( "fill", 129, 40, 36, 10 )
 	love.graphics.rectangle( "fill", 167, 40, 10, 10 )
-	love.graphics.rectangle( "fill", 1, 52, 164, 12*numStations-2 )
+	love.graphics.rectangle( "fill", 1, 52, 164, 12*numStationsF-2 )
 	love.graphics.rectangle( "fill", 167, 52, 10, 10 )
-	love.graphics.rectangle( "fill", 167, 64, 10, 12*(numStations-2)-2 )
-	love.graphics.rectangle( "fill", 167, 64+12*(numStations-2), 10, 10 )
+	love.graphics.rectangle( "fill", 167, 64, 10, 12*(numStationsF-2)-2 )
+	love.graphics.rectangle( "fill", 167, 64+12*(numStationsF-2), 10, 10 )
 	love.graphics.rectangle( "fill", 1, menuOriginY+2, 178, 10 )
 	love.graphics.rectangle( "fill", 1, menuOriginY+14, 178, 10 )
 	love.graphics.rectangle( "fill", 1, menuOriginY+26, 97, 10 )
@@ -48,8 +54,8 @@ function drawLeftMenu()
 	love.graphics.line( 166, 62, 178, 62)
 	love.graphics.line( 89, 22, 89,0)
 	love.graphics.line( 0, windowHeight-1, 178, windowHeight-1, 178,0)
-	love.graphics.line( 166, 62+12*(numStations-2), 178, 62+12*(numStations-2))
-	love.graphics.line( 166, 62+12*(numStations-1), 178, 62+12*(numStations-1))
+	love.graphics.line( 166, 62+12*(numStationsF-2), 178, 62+12*(numStationsF-2))
+	love.graphics.line( 166, 62+12*(numStationsF-1), 178, 62+12*(numStationsF-1))
 	love.graphics.line( 0, menuOriginY, 166, menuOriginY, 166, 39)
 	love.graphics.line( 0, menuOriginY+12, 178, menuOriginY+12)
 	love.graphics.line( 0, menuOriginY+24, 178, menuOriginY+24)
@@ -73,9 +79,9 @@ function drawLeftMenu()
 	love.graphics.rectangle( "fill", 126, menuOriginY+63, 26, 8 )
 	--Table
 	love.graphics.setColor( 148/255,148/255,148/255)
-	love.graphics.line( 53, 52, 53, 50+12*numStations)
-	love.graphics.line( 91, 52, 91, 50+12*numStations)
-	love.graphics.line( 129, 52, 129, 50+12*numStations)
+	love.graphics.line( 53, 52, 53, 50+12*numStationsF)
+	love.graphics.line( 91, 52, 91, 50+12*numStationsF)
+	love.graphics.line( 129, 52, 129, 50+12*numStationsF)
 	for i=1, numStations do
 		if editData[1] == currentTimeTable and math.floor(editData[2]/timeTableFileLength) == i then
 			if editData[2] == i*timeTableFileLength then
@@ -104,7 +110,7 @@ function drawLeftMenu()
 			love.graphics.print(timeTableData[currentTimeTable][i*timeTableFileLength+2], 92, 39+i*12)
 			love.graphics.print(timeTableData[currentTimeTable][i*timeTableFileLength+3], 130, 39+i*12)
 		end
-		if i~=numStations then
+		if i~=numStations or timeTableData[0][currentTimeTable*masterFileLength+6] == 1 then
 			love.graphics.setColor( 148/255,148/255,148/255)
 			love.graphics.line( 1, 51+12*i, 165, 51+12*i)
 			love.graphics.setColor( 115/255,115/255,115/255)
@@ -115,10 +121,41 @@ function drawLeftMenu()
 			love.graphics.draw( spriteWarnIcon, 41, 41+i*12)
 		end
 	end
+	--If reverse toggled
+	if timeTableData[0][currentTimeTable*masterFileLength+6] == 1 then
+		for i=1, numStations-1 do
+			local stationNum = numStations-i
+			if editData[1] == currentTimeTable and math.floor(editData[2]/timeTableFileLength) == stationNum then
+				love.graphics.print(timeTableData[currentTimeTable][stationNum*timeTableFileLength], 2, 39+i*12+menuOriginYH)
+				love.graphics.print(timeTableData[currentTimeTable][(stationNum+1)*timeTableFileLength+1], 54, 39+i*12+menuOriginYH)
+				if editData[2] == stationNum*timeTableFileLength+4 then
+					love.graphics.print(timeTableData[currentTimeTable][stationNum*timeTableFileLength+4]..'_', 92, 39+i*12+menuOriginYH)
+				else
+					love.graphics.print(timeTableData[currentTimeTable][stationNum*timeTableFileLength+4], 92, 39+i*12+menuOriginYH)
+				end
+				if editData[2] == stationNum*timeTableFileLength+5 then
+					love.graphics.print(timeTableData[currentTimeTable][stationNum*timeTableFileLength+5]..'_', 130, 39+i*12+menuOriginYH)
+				else
+					love.graphics.print(timeTableData[currentTimeTable][stationNum*timeTableFileLength+5], 130, 39+i*12+menuOriginYH)
+				end
+			else
+				love.graphics.print(timeTableData[currentTimeTable][stationNum*timeTableFileLength], 2, 39+i*12+menuOriginYH)
+				love.graphics.print(timeTableData[currentTimeTable][(stationNum+1)*timeTableFileLength+1], 54, 39+i*12+menuOriginYH)
+				love.graphics.print(timeTableData[currentTimeTable][stationNum*timeTableFileLength+4], 92, 39+i*12+menuOriginYH)
+				love.graphics.print(timeTableData[currentTimeTable][stationNum*timeTableFileLength+5], 130, 39+i*12+menuOriginYH)
+			end
+			if i~=numStations-1 then
+				love.graphics.setColor( 148/255,148/255,148/255)
+				love.graphics.line( 1, 51+12*i+menuOriginYH, 165, 51+12*i+menuOriginYH)
+				love.graphics.setColor( 115/255,115/255,115/255)
+				love.graphics.line( 1, 50+12*i+menuOriginYH, 165, 50+12*i+menuOriginYH)
+			end
+		end
+	end
 	love.graphics.setColor( 115/255,115/255,115/255)
-	love.graphics.line( 52, 52, 52, 50+12*numStations)
-	love.graphics.line( 90, 52, 90, 50+12*numStations)
-	love.graphics.line( 128, 52, 128, 50+12*numStations)
+	love.graphics.line( 52, 52, 52, menuOriginY)
+	love.graphics.line( 90, 52, 90, menuOriginY)
+	love.graphics.line( 128, 52, 128, menuOriginY)
 	
 	
 	--Draw sprites and text
@@ -140,7 +177,7 @@ function drawLeftMenu()
 	love.graphics.print("Time", 92, 39)
 	love.graphics.print("Wait", 130, 39)
 	love.graphics.print("%", 168, 52)
-	love.graphics.print("$", 168, 49+12*(numStations-1))
+	love.graphics.print("$", 168, 49+12*(numStationsF-1))
 	if specialButtonHeld then
 		love.graphics.print("Add station after "..timeTableData[currentTimeTable][currentStation*timeTableFileLength], 2, menuOriginY+1)
 	else
