@@ -18,11 +18,22 @@ function drawGraph()
 	for i=1, numStops[currentTimeTable] do
 		stationPos[i] = stationPos[i-1] + tonumber(timeTableData[currentTimeTable][i*timeTableFileLength+1])
 	end
-	local minDist = math.min(unpack(stationPos))
+	local minDist
+	if spaceLimits[1] == 0 then
+		minDist = math.min(unpack(stationPos))
+	else 
+		minDist = stationPos[spaceLimits[1]]
+	end
 	for i=1, numStops[currentTimeTable] do
 		stationPos[i] = stationPos[i]-minDist--fixes lowest at 0
 	end
-	local maxDist = math.max(unpack(stationPos))
+	local maxDist
+	if spaceLimits[2] == 0 then
+		maxDist = math.max(unpack(stationPos))
+	else 
+		maxDist = stationPos[spaceLimits[2]]
+	end
+--	local spaceScale = 
 	for i=1, numStops[currentTimeTable] do
 		stationPos[i] = math.ceil(stationPos[i]*(graphY-1)/maxDist)--scales it so highest is at graphY
 	end
@@ -149,9 +160,11 @@ function drawGraph()
 	love.graphics.rectangle( "fill", windowWidth-10, 10, windowWidth-10, windowHeight-50 )
 	--Draw station names (do last)
 	for i=1, numStops[currentTimeTable] do
-		love.graphics.setColor( 0,0,0)
-		love.graphics.line( 250, 10+stationPos[i], 247, 10+stationPos[i] )
-		love.graphics.printf(timeTableData[currentTimeTable][i*timeTableFileLength], 96, 4+stationPos[i], 150, "right")
+		if stationPos[i] > maxDist or stationPos[i] < minDist then
+			love.graphics.setColor( 0,0,0)
+			love.graphics.line( 250, 10+stationPos[i], 247, 10+stationPos[i] )
+			love.graphics.printf(timeTableData[currentTimeTable][i*timeTableFileLength], 96, 4+stationPos[i], 150, "right")
+		end
 	end
 	for i=0, deltaTime do
 		love.graphics.setColor( 0,0,0)

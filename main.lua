@@ -20,6 +20,26 @@ function checkRollover(num,maxNum)
 	end
 end
 
+function spaceCheck(i)
+	if i == 2 then -- change max
+		if spaceLimits[2] ~= 0 and spaceLimits[2] == spaceLimits[1] then
+			if spaceLimits[2] ~= numStops[currentTimeTable] then --next is not max
+				spaceLimits[2] = spaceLimits[2] + 1
+			else
+				spaceLimits[2] = 0
+			end
+		end
+	else -- change min
+		if spaceLimits[1] ~= 0 and spaceLimits[2] == spaceLimits[1] then
+			spaceLimits[1] = spaceLimits[1] - 1
+		elseif spaceLimits[1] < 0 then
+			spaceLimits[1] = 0
+		elseif spaceLimits[1] == numStops[currentTimeTable] then
+			spaceLimits[1] = 0
+		end
+	end
+end
+
 function love.mousepressed(x, y, button)
 	if button == 1 then
 		if warningID == 0 then
@@ -54,7 +74,7 @@ function love.mousepressed(x, y, button)
 			if x >= 308 and x <= 321 then
 				if y >= windowHeight-14 then
 					timeLimits[2] = timeLimits[2] - 1
-					timeLimits[2] = checkRollover(timeLimits[2],24)--timeLimits[2]+is24Plus(timeLimits[2])
+					timeLimits[2] = checkRollover(timeLimits[2],24)
 				elseif y >= windowHeight-28 then
 					timeLimits[1] = timeLimits[1] - 1
 					timeLimits[1] = checkRollover(timeLimits[1],24)
@@ -66,6 +86,32 @@ function love.mousepressed(x, y, button)
 				elseif y >= windowHeight-28 then
 					timeLimits[1] = timeLimits[1] + 1
 					timeLimits[1] = checkRollover(timeLimits[1],24)
+				end
+			end
+			-- Change Space Axis
+			if x >= 530 and x <= 543 then
+				if y >= windowHeight-14 then
+					if spaceLimits[2] ~= 0 then --its not max
+						spaceLimits[2] = spaceLimits[2] - 1
+					else
+						spaceLimits[2] = numStops[currentTimeTable]
+					end
+					spaceCheck(2)
+				elseif y >= windowHeight-28 then
+					spaceLimits[1] = spaceLimits[1] - 1
+					spaceCheck(1)
+				end
+			elseif x >= 544 and x <= 557 then
+				if y >= windowHeight-14 then
+					if spaceLimits[2] ~= numStops[currentTimeTable] and spaceLimits[2] ~= 0 then --next is not max
+						spaceLimits[2] = spaceLimits[2] + 1
+					else
+						spaceLimits[2] = 0
+					end
+					spaceCheck(2)
+				elseif y >= windowHeight-28 then
+					spaceLimits[1] = spaceLimits[1] + 1
+					spaceCheck(1)
 				end
 			end
 			-- Change Timetable Colour
@@ -152,7 +198,8 @@ function love.draw()
 		parseWarnings()
 	end
 	
-	textToPrint = editData[1]..','..editData[2]..','..timeTableData[editData[1]][editData[2]]..','..editData[2]%timeTableFileLength
+	--textToPrint = editData[1]..','..editData[2]..','..timeTableData[editData[1]][editData[2]]..','..editData[2]%timeTableFileLength
+	textToPrint = spaceLimits[1]..','..spaceLimits[2] 
 	love.graphics.print(textToPrint.."_", 20, 345+28)
 	
 end

@@ -55,4 +55,5 @@ function love.load()
 	reloadData()
 	
 	timeLimits = {12,15}
+	spaceLimits = {0,0}
 end

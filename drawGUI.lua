@@ -287,6 +287,16 @@ function drawBottomMenu(x,y)
 	
 	love.graphics.print("Distance axis start:", menuOriginX+160, menuOriginY+1)
 	love.graphics.print("Distance axis end:", menuOriginX+160, menuOriginY+15)
+	if spaceLimits[1] == 0 then
+		love.graphics.print("Min", menuOriginX+303, menuOriginY+1)
+	else
+		love.graphics.print(timeTableData[currentTimeTable][spaceLimits[1]*timeTableFileLength], menuOriginX+303, menuOriginY+1)
+	end
+	if spaceLimits[2] == 0 then
+		love.graphics.print("Max", menuOriginX+303, menuOriginY+15)
+	else
+		love.graphics.print(timeTableData[currentTimeTable][spaceLimits[2]*timeTableFileLength], menuOriginX+303, menuOriginY+15)
+	end
 	love.graphics.print("<", menuOriginX+355, menuOriginY+1)
 	love.graphics.print("<", menuOriginX+355, menuOriginY+15)
 	love.graphics.print(">", menuOriginX+369, menuOriginY+1)
