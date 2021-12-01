@@ -47,5 +47,4 @@ function backspaceHandler()
 		backspaceStartTime = backspaceTimer
 		backspaceStillPressed = false
 	end
-	windowWidth, windowHeight = love.window.getMode()
 end

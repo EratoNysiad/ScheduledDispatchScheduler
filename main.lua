@@ -6,7 +6,7 @@ require "saveHandling"
 require "addRemove"
 require "warningUI"
 require "init"
-require "keyhandling"
+require "keyHandling"
 require "drawGraph"
 require "drawGUI"
 
@@ -40,16 +40,48 @@ function spaceCheck(i)
 	end
 end
 
+function love.resize(w, h)
+	windowWidth = w
+	windowHeight = h
+	local maxVal
+	if timeTableData[0][currentTimeTable*masterFileLength+6] == 1 then --table is shifted down
+		maxVal=windowHeight-120-51-12*(numStops[currentTimeTable]*2-1)
+	elseif timeTableData[0][currentTimeTable*masterFileLength+6] ~= 1 then --table is shifted down
+		maxVal=windowHeight-120-51-12*(numStops[currentTimeTable])
+	end
+	if maxVal > 0 then -- no need for scrolling
+		tablePos = 0
+	else
+		tablePos = math.min(tablePos,0)
+		tablePos = math.max(tablePos,maxVal)
+	end
+	textToPrint = maxVal..','..tablePos
+end
+
+function love.wheelmoved(x, y)
+	local maxVal
+	if timeTableData[0][currentTimeTable*masterFileLength+6] == 1 then --table is shifted down
+		maxVal=windowHeight-120-51-12*(numStops[currentTimeTable]*2-1)
+	elseif timeTableData[0][currentTimeTable*masterFileLength+6] ~= 1 then --table is shifted down
+		maxVal=windowHeight-120-51-12*(numStops[currentTimeTable])
+	end
+	if maxVal > 0 then -- no need for scrolling
+		tablePos = 0
+	else
+		tablePos = math.min(tablePos+y*3,0)
+		tablePos = math.max(tablePos,maxVal)
+	end
+	textToPrint = maxVal..','..tablePos
+end
+
 function love.mousepressed(x, y, button)
 	if button == 1 then
 		if warningID == 0 then
-			local menuOriginY = 50+12*numStops[currentTimeTable]
-			local menuOriginYMinor = 50+12*numStops[currentTimeTable]
+			local menuOriginY = math.min(50+12*numStops[currentTimeTable],windowHeight-120)
+			local menuOriginYMinor = menuOriginY
 			if timeTableData[0][currentTimeTable*masterFileLength+6] == 1 then
-				menuOriginY = 50+12*(numStops[currentTimeTable]*2-1)
+				menuOriginY = math.min(50+12*(numStops[currentTimeTable]*2-1),windowHeight-120)
 			end
-			textToPrint = menuOriginY
-			-- Selecting data to edit
 			if x >= 99 and x <= 178 then
 				if y >= menuOriginY+25 and y <= menuOriginY+36 then
 					editData = {0, currentTimeTable*masterFileLength+3}
@@ -59,13 +91,13 @@ function love.mousepressed(x, y, button)
 					editData = {0, currentTimeTable*masterFileLength+5}
 				end
 			end
-			if y >= 51 and y <= menuOriginYMinor and x >= 14 and x <= 165 then
-				editData = {currentTimeTable,timeTableFileLength+math.floor((x-14)/38)+timeTableFileLength*math.floor((y-52)/12)}
-			elseif y >= 51 and y <= menuOriginYMinor and x >= 0 and x <= 13 then
-				editData = {currentTimeTable,timeTableFileLength+timeTableFileLength*math.floor((y-52)/12)}
+			if y >= 51 and y <= menuOriginYMinor+tablePos and x >= 14 and x <= 165 then
+				editData = {currentTimeTable,timeTableFileLength+math.floor((x-14)/38)+timeTableFileLength*math.floor((y-tablePos-52)/12)}
+			elseif y >= 51 and y <= menuOriginYMinor+tablePos and x >= 0 and x <= 13 then
+				editData = {currentTimeTable,timeTableFileLength+timeTableFileLength*math.floor((y-tablePos-52)/12)}
 			end
-			if y >= menuOriginYMinor and y <= menuOriginY and x >= 90 and x <= 165 then
-				editData = {currentTimeTable,timeTableFileLength+math.floor((x-14)/38)+timeTableFileLength*(numStops[currentTimeTable]-math.floor((y-menuOriginYMinor-1)/12)-2)+2}
+			if y >= menuOriginYMinor+tablePos and y <= menuOriginY and x >= 90 and x <= 165 then
+				editData = {currentTimeTable,timeTableFileLength+math.floor((x-14)/38)+timeTableFileLength*(numStops[currentTimeTable]-math.floor((y-tablePos-50+12*numStops[currentTimeTable]-1)/12)-2)+2}
 			end
 			if y >= 23 and y <= 39 and x <= 151 then
 				editData = {0, currentTimeTable*masterFileLength+1}
@@ -198,8 +230,8 @@ function love.draw()
 		parseWarnings()
 	end
 	
-	--textToPrint = editData[1]..','..editData[2]..','..timeTableData[editData[1]][editData[2]]..','..editData[2]%timeTableFileLength
-	textToPrint = spaceLimits[1]..','..spaceLimits[2] 
-	love.graphics.print(textToPrint.."_", 20, 345+28)
+	textToPrint = editData[1]..','..editData[2]..','..timeTableData[editData[1]][editData[2]]..','..editData[2]%timeTableFileLength
+	--textToPrint = spaceLimits[1]..','..spaceLimits[2] =
+	love.graphics.print(textToPrint.."_", 180, windowHeight-40)
 	
 end

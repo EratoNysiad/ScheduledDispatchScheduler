@@ -1,7 +1,8 @@
 function love.load()
 	-- initialise game
 	love.window.setMode(720,480, {resizable=true, minwidth=558, minheight=291}) --GBA*3 screensize by default
-	love.window.setTitle( "ScheduledDispatchScheduler 0.1 Pre-release" ) --set name
+	windowWidth, windowHeight = love.window.getMode()
+	love.window.setTitle( "ScheduledDispatchScheduler 0.2 Pre-release" ) --set name
 	--Set font
 	font = love.graphics.newImageFont("font.png", " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789:;<=>?_!\"#$%&'()*+,-./")
 	fontWhite = love.graphics.newImageFont("fontWhite.png", " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789:;<=>?_!\"#$%&'()*+,-./")
@@ -54,6 +55,7 @@ function love.load()
 	masterFileLength = 7
 	reloadData()
 	
+	tablePos = 0
 	timeLimits = {12,15}
 	spaceLimits = {0,0}
 end

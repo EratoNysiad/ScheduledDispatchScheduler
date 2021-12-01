@@ -49,7 +49,7 @@ function loadTimeTable(i)
 		elseif i == 3 then
 			printData = "Code,Dist,Time,Wait,rTime,rWait\nICK,0,0,0,0,0\nTYY,6,6,2,0,0\nAMG,24,24,10,0,0\nJNHM,12,12,0,0,0\nHMJ,3,3,2,0,0"
 		else
-			printData = "Code,Dist,Time,Wait,rTime,rWait\nDTYY,0,0,0,0,0\nTYY,-6,6,2,0,0\nAMG,24,24,10,0,0\nJNHM,12,12,0,0,0\nHMJ,3,3,2,0,0"
+			printData = "Code,Dist,Time,Wait,rTime,rWait\nDTYY,0,0,0,6,2\nTYY,-6,6,2,20,2\nAMG,24,21,10,13,10\nJNHM,12,12,0,2,0\nHMJ,3,3,2,0,0"
 		end
 		love.filesystem.write( 'ttdata/'.. timeTableData[0][i*masterFileLength] ..'.dat', printData )
 		ttFileRaw, ttFileSize = love.filesystem.read( 'ttdata/'.. timeTableData[0][i*masterFileLength] ..'.dat' )
