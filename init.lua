@@ -1,9 +1,10 @@
 function love.load()
 	-- initialise game
 	love.window.setMode(720,480, {resizable=true, minwidth=558, minheight=291}) --GBA*3 screensize by default
-	love.window.setTitle( "ScheduledDispatchScheduler" ) --set name
+	love.window.setTitle( "ScheduledDispatchScheduler 0.1 Pre-release" ) --set name
 	--Set font
 	font = love.graphics.newImageFont("font.png", " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789:;<=>?_!\"#$%&'()*+,-./")
+	fontWhite = love.graphics.newImageFont("fontWhite.png", " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789:;<=>?_!\"#$%&'()*+,-./")
 	love.graphics.setFont(font)
 	--Set colours
 	lineColour = {}
@@ -28,6 +29,8 @@ function love.load()
 	spriteSaveButton = love.graphics.newImage("saveIcon.png")
 	spriteLoadButton = love.graphics.newImage("loadIcon.png")
 	spriteWarnIcon = love.graphics.newImage("warningIcon.png")
+	spriteGrey1 = love.graphics.newImage("greyFirst.png")
+	spriteGreyR = love.graphics.newImage("greyReverse.png")
 	
 	textToPrint= ""
 	
@@ -44,8 +47,9 @@ function love.load()
 	timeTableData = {}
 	numStops = {}
 	
-	
-	currentTimeTable=2
+	warningID = 0
+	warningVerified = false
+	currentTimeTable = 2
 	timeTableFileLength = 6
 	masterFileLength = 7
 	reloadData()

@@ -111,7 +111,7 @@ function drawGraph()
 						end
 						prevTime = currentTime
 						currentTime = currentTime + tonumber(timeTableData[n][(i+1)*timeTableFileLength+3])
-						if thisStation ~= 0 and nextStation ~= 0 then
+						if thisStation ~= 0 or nextStation ~= 0 then
 							love.graphics.line( 251+(prevTime*timeWidth), 10+stationPos[nextStation], 251+(currentTime*timeWidth), 10+stationPos[nextStation] )
 						end
 					end	
@@ -126,7 +126,7 @@ function drawGraph()
 							end
 							prevTime = currentTime
 							currentTime = currentTime + tonumber(timeTableData[n][(i)*timeTableFileLength+5])
-							if thisStation ~= 0 and nextStation ~= 0 then
+							if thisStation ~= 0 or nextStation ~= 0 then
 								love.graphics.line( 251+(prevTime*timeWidth), 10+stationPos[i], 251+(currentTime*timeWidth), 10+stationPos[i] )
 							end
 						end

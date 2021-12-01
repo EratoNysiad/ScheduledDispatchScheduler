@@ -69,5 +69,4 @@ function removeTimeTable()
 	end
 	numTimeTables = numTimeTables - 1
 	currentTimeTable = currentTimeTable - 1
-	saveMasterFile()
 end
