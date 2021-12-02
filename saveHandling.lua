@@ -6,7 +6,7 @@ function saveMasterFile()
 			textToPrint = i
 		else
 			masterFileData = masterFileData..currentBit
-			if timeTableData[0][i]~=nil then
+			if timeTableData[0][i]~=nil or i~=(numTimeTables+1)*masterFileLength-1 then
 				if i%masterFileLength == 0 then
 					masterFileData = masterFileData .. '\n'
 				else

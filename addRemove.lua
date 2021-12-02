@@ -71,5 +71,5 @@ function removeTimeTable()
 		end
 	end
 	numTimeTables = numTimeTables - 1
-	currentTimeTable = currentTimeTable - 1
+	--currentTimeTable = currentTimeTable - 1
 end
