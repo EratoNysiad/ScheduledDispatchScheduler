@@ -199,14 +199,16 @@ function drawLeftMenu()
 	love.graphics.print("Wait", 130, 39)
 	love.graphics.print("%", 168, 52)
 	love.graphics.print("$", 168, math.min(49+12*(numStationsF-1),menuOriginY-13))
+	
+	--Set the currentStation
+	currentStation = math.floor(editData[2]/timeTableFileLength)
+	if timeTableData[currentTimeTable][currentStation*timeTableFileLength] == nil or timeTableData[currentTimeTable][currentStation*timeTableFileLength] == "Code" or editData[1] == 0 then
+		currentStation = numStations
+	end
 	if specialButtonHeld then
 		love.graphics.print("Add station after "..timeTableData[currentTimeTable][currentStation*timeTableFileLength], 2, menuOriginY+1)
 	else
 		love.graphics.print("Add station before "..timeTableData[currentTimeTable][currentStation*timeTableFileLength], 2, menuOriginY+1)
-	end
-	currentStation = math.floor(editData[2]/timeTableFileLength)
-	if timeTableData[currentTimeTable][currentStation*timeTableFileLength] == nil or timeTableData[currentTimeTable][currentStation*timeTableFileLength] == "Code" or editData[1] == 0 then
-		currentStation = numStations
 	end
 	love.graphics.print("Remove station "..timeTableData[currentTimeTable][currentStation*timeTableFileLength], 2, menuOriginY+13)
 	love.graphics.print("First train:", 2, menuOriginY+25)

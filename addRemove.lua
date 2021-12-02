@@ -52,6 +52,9 @@ function addTimeTable()
 	end
 	numTimeTables = numTimeTables + 1
 	currentTimeTable = currentTimeTable + 1
+	--attempt at solving entanglement of timetables
+	saveTimeTable(currentTimeTable)
+	loadTimeTable(currentTimeTable)
 end
 
 function removeTimeTable()

@@ -51,6 +51,7 @@ function love.load()
 	warningID = 0
 	warningVerified = false
 	currentTimeTable = 2
+	currentStation = 1
 	timeTableFileLength = 6
 	masterFileLength = 7
 	reloadData()
