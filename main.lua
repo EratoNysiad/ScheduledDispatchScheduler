@@ -102,6 +102,20 @@ function love.mousepressed(x, y, button)
 			if y >= 23 and y <= 39 and x <= 151 then
 				editData = {0, currentTimeTable*masterFileLength+1}
 			end
+			-- Scroll bar
+			if x >= 166 and x <= 178 then
+				local numStations = numStops[currentTimeTable]
+				local numStationsF = numStations
+				if timeTableData[0][currentTimeTable*masterFileLength+6] == 1 then
+					numStationsF = numStations*2-1
+					menuOriginY = math.min(50+12*numStationsF,windowHeight-120)
+				end
+				if y >= 51 and y <= 63 then
+					love.wheelmoved(0, 8)
+				elseif y >= math.min(64+12*(numStationsF-2),menuOriginY-10)-1 and y <= math.min(64+12*(numStationsF-2),menuOriginY-10)+11 then
+					love.wheelmoved(0, -8)
+				end
+			end
 			-- Change Time Axis
 			if x >= 308 and x <= 321 then
 				if y >= windowHeight-14 then
@@ -230,8 +244,8 @@ function love.draw()
 		parseWarnings()
 	end
 	
-	textToPrint = editData[1]..','..editData[2]..','..timeTableData[editData[1]][editData[2]]..','..editData[2]%timeTableFileLength
+	--textToPrint = editData[1]..','..editData[2]..','..timeTableData[editData[1]][editData[2]]..','..editData[2]%timeTableFileLength
 	--textToPrint = timeTableData[0][currentTimeTable*masterFileLength+6]
-	love.graphics.print(textToPrint.."_", 180, windowHeight-40)
+	--love.graphics.print(textToPrint.."_", 180, windowHeight-40)
 	
 end

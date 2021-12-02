@@ -101,6 +101,29 @@ function drawLeftMenu()
 	love.graphics.line( 90, 52, 90, menuOriginY)
 	love.graphics.line( 128, 52, 128, menuOriginY)
 	
+	--Scroll bar
+	love.graphics.setColor( 1,1,1)
+	for i=0, math.ceil(windowHeight/500) do
+		love.graphics.draw( spriteScrollBar, 166, i*500)
+	end
+	local barPos = 0
+	if tablePos ~= 0 then
+		local maxTablePosVal = windowHeight-120-51-12*numStationsF
+		local diffHeight = math.floor((menuOriginY-76)*(windowHeight-195)/((numStationsF-2)*12))+2-windowHeight+195
+		barPos = -math.ceil(tablePos*diffHeight/maxTablePosVal-1)
+	end
+	love.graphics.setColor( 168/255,168/255,168/255)
+	love.graphics.rectangle( "fill", 166, 51, 11, 11 )
+	love.graphics.rectangle( "fill", 166, math.min(64+12*(numStationsF-2),menuOriginY-10)-1, 11, 11 )
+	love.graphics.rectangle( "fill", 166, barPos+63, 11, math.min(12*(numStationsF-2)-2,math.floor((menuOriginY-76)*(windowHeight-195)/((numStationsF-2)*12)))+1)
+	love.graphics.setColor( 131/255,131/255,131/255)
+	--math.floor((menuOriginY-76)*(windowHeight-195)/((numStationsF-1)*12))
+	love.graphics.rectangle( "fill", 167, 52, 10, 10 )
+	love.graphics.rectangle( "fill", 167, barPos+64, 10, math.min(12*(numStationsF-2)-2,math.floor((menuOriginY-76)*(windowHeight-195)/((numStationsF-2)*12))))
+	love.graphics.rectangle( "fill", 167, math.min(64+12*(numStationsF-2),menuOriginY-10), 10, 10 )
+	love.graphics.setColor( 100/255,100/255,100/255)
+	love.graphics.line( 166, barPos+math.min(62+12*(numStationsF-2),math.floor((menuOriginY-76)*(windowHeight-195)/((numStationsF-2)*12))+64), 178, barPos+math.min(62+12*(numStationsF-2),math.floor((menuOriginY-76)*(windowHeight-195)/((numStationsF-2)*12))+64))
+	
 	
 	--Draw boxes
 	love.graphics.setColor( 168/255,168/255,168/255)
@@ -114,12 +137,9 @@ function drawLeftMenu()
 	love.graphics.rectangle( "fill", 1, 40, 50, 10 )
 	love.graphics.rectangle( "fill", 53, 40, 36, 10 )
 	love.graphics.rectangle( "fill", 91, 40, 36, 10 )
-	love.graphics.rectangle( "fill", 129, 40, 36, 10 )
 	love.graphics.rectangle( "fill", 167, 40, 10, 10 )
-	love.graphics.rectangle( "fill", 167, 52, 10, 10 )
+	love.graphics.rectangle( "fill", 129, 40, 36, 10 )
 	--bar
-	love.graphics.rectangle( "fill", 167, 64, 10, math.min(12*(numStationsF-2)-2,menuOriginY-76))
-	love.graphics.rectangle( "fill", 167, math.min(64+12*(numStationsF-2),menuOriginY-10), 10, 10 )
 	--cont
 	love.graphics.rectangle( "fill", 1, menuOriginY+2, 178, 10 )
 	love.graphics.rectangle( "fill", 1, menuOriginY+14, 178, 10 )
@@ -150,11 +170,8 @@ function drawLeftMenu()
 	love.graphics.line( 166, 50, 166, 39)
 	love.graphics.line( 166, 62, 178, 62)
 	love.graphics.line( 89, 22, 89,0)
-	love.graphics.line( 0, windowHeight-1, 178, windowHeight-1, 178,0)
-	--bar
-	love.graphics.line( 166, math.min(62+12*(numStationsF-2),menuOriginY-12), 178, math.min(62+12*(numStationsF-2),menuOriginY-12))
 	love.graphics.line( 166, math.min(62+12*(numStationsF-1),menuOriginY), 178, math.min(62+12*(numStationsF-1),menuOriginY))
-	--cont
+	love.graphics.line( 0, windowHeight-1, 178, windowHeight-1, 178,0)
 	love.graphics.line( 0, menuOriginY, 166, menuOriginY, 166, 39)
 	love.graphics.line( 0, menuOriginY+12, 178, menuOriginY+12)
 	love.graphics.line( 0, menuOriginY+24, 178, menuOriginY+24)

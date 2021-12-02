@@ -1,6 +1,6 @@
 function love.load()
 	-- initialise game
-	love.window.setMode(720,480, {resizable=true, minwidth=558, minheight=291}) --GBA*3 screensize by default
+	love.window.setMode(720,480, {resizable=true, minwidth=558, minheight=290}) --GBA*3 screensize by default
 	windowWidth, windowHeight = love.window.getMode()
 	love.window.setTitle( "ScheduledDispatchScheduler 0.2 Pre-release" ) --set name
 	--Set font
@@ -32,6 +32,7 @@ function love.load()
 	spriteWarnIcon = love.graphics.newImage("warningIcon.png")
 	spriteGrey1 = love.graphics.newImage("greyFirst.png")
 	spriteGreyR = love.graphics.newImage("greyReverse.png")
+	spriteScrollBar = love.graphics.newImage("scrollBar.png")
 	
 	textToPrint= ""
 	
