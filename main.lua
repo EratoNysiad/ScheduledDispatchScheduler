@@ -231,7 +231,7 @@ function love.draw()
 	end
 	
 	--textToPrint = editData[1]..','..editData[2]..','..timeTableData[editData[1]][editData[2]]..','..timeTableData[editData[1]-1][editData[2]]..','..editData[2]%timeTableFileLength
-	--textToPrint = spaceLimits[1]..','..spaceLimits[2] =
+	textToPrint = timeTableData[0][currentTimeTable*masterFileLength+6]
 	love.graphics.print(textToPrint.."_", 180, windowHeight-40)
 	
 end

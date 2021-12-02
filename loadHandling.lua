@@ -71,10 +71,9 @@ function loadTimeTable(i)
 	end
 	timeTableData[i] = ttFile
 	numStops[i] = (tableX + 1)/timeTableFileLength -1
-	stationLimits = {1,numStops[currentTimeTable]}
 	-- fix stupid bug
-	if timeTableData[0][currentTimeTable*masterFileLength+6] == tostring(1) then
-		timeTableData[0][currentTimeTable*masterFileLength+6] = 1
+	if timeTableData[0][i*masterFileLength+6] == tostring(1) then
+		timeTableData[0][i*masterFileLength+6] = 1
 	end
 end
 
