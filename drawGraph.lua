@@ -160,7 +160,7 @@ function drawGraph()
 	love.graphics.rectangle( "fill", windowWidth-10, 10, windowWidth-10, windowHeight-50 )
 	--Draw station names (do last)
 	for i=1, numStops[currentTimeTable] do
-		if stationPos[i] >= maxDist or stationPos[i] <= minDist then
+		if stationPos[i] >= 10 or stationPos[i] <= windowHeight-35 then
 			love.graphics.setColor( 0,0,0)
 			love.graphics.line( 250, 10+stationPos[i], 247, 10+stationPos[i] )
 			love.graphics.printf(timeTableData[currentTimeTable][i*timeTableFileLength], 96, 4+stationPos[i], 150, "right")

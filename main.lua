@@ -91,13 +91,13 @@ function love.mousepressed(x, y, button)
 					editData = {0, currentTimeTable*masterFileLength+5}
 				end
 			end
-			if y >= 51 and y <= menuOriginYMinor+tablePos and x >= 14 and x <= 165 then
-				editData = {currentTimeTable,timeTableFileLength+math.floor((x-14)/38)+timeTableFileLength*math.floor((y-tablePos-52)/12)}
-			elseif y >= 51 and y <= menuOriginYMinor+tablePos and x >= 0 and x <= 13 then
+			if y >= 51 and y <= 50+12*numStops[currentTimeTable]+tablePos and x >= 14 and x <= 165 then
+				editData = {currentTimeTable,timeTableFileLength+math.floor((x-14)/38)+timeTableFileLength*math.floor((y-tablePos-51)/12)}
+			elseif y >= 51 and y <= 50+12*numStops[currentTimeTable]+tablePos and x >= 0 and x <= 13 then
 				editData = {currentTimeTable,timeTableFileLength+timeTableFileLength*math.floor((y-tablePos-52)/12)}
 			end
-			if y >= menuOriginYMinor+tablePos and y <= menuOriginY and x >= 90 and x <= 165 then
-				editData = {currentTimeTable,timeTableFileLength+math.floor((x-14)/38)+timeTableFileLength*(numStops[currentTimeTable]-math.floor((y-tablePos-50+12*numStops[currentTimeTable]-1)/12)-2)+2}
+			if y >= 50+12*numStops[currentTimeTable]+tablePos and y <= menuOriginY and x >= 90 and x <= 165 then
+				editData = {currentTimeTable,timeTableFileLength+math.floor((x-14)/38)+2+timeTableFileLength*(-2+2*numStops[currentTimeTable]-math.floor((y-tablePos-51)/12))}
 			end
 			if y >= 23 and y <= 39 and x <= 151 then
 				editData = {0, currentTimeTable*masterFileLength+1}
@@ -230,8 +230,8 @@ function love.draw()
 		parseWarnings()
 	end
 	
-	--textToPrint = editData[1]..','..editData[2]..','..timeTableData[editData[1]][editData[2]]..','..timeTableData[editData[1]-1][editData[2]]..','..editData[2]%timeTableFileLength
-	textToPrint = timeTableData[0][currentTimeTable*masterFileLength+6]
+	textToPrint = editData[1]..','..editData[2]..','..timeTableData[editData[1]][editData[2]]..','..editData[2]%timeTableFileLength
+	--textToPrint = timeTableData[0][currentTimeTable*masterFileLength+6]
 	love.graphics.print(textToPrint.."_", 180, windowHeight-40)
 	
 end
