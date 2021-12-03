@@ -34,7 +34,7 @@ function createMasterFile()
 		end
 	end
 	timeTableData[0] = masterFile
-	numTimeTables = (tableX + 1)/masterFileLength -1
+	numTimeTables = math.floor((tableX + 1)/masterFileLength -1)
 	currentTimeTable = isLineOOB(currentTimeTable)
 end
 
