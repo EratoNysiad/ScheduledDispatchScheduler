@@ -58,18 +58,20 @@ function addTimeTable()
 end
 
 function removeTimeTable()
-	if currentTimeTable ~= numTimeTables then
-		for i=currentTimeTable, numTimeTables-1 do
-			for j=0, masterFileLength-1 do
-				timeTableData[0][(i)*masterFileLength+j] = timeTableData[0][(i+1)*masterFileLength+j]
+	if numTimeTables ~= 1 then
+		if currentTimeTable ~= numTimeTables then
+			for i=currentTimeTable, numTimeTables-1 do
+				for j=0, masterFileLength-1 do
+					timeTableData[0][(i)*masterFileLength+j] = timeTableData[0][(i+1)*masterFileLength+j]
+				end
+			end	
+			timeTableData[0][(numTimeTables)*masterFileLength] = nil
+			for i=currentTimeTable, numTimeTables-1 do
+				timeTableData[i] = timeTableData[i+1]
+				numStops[i] = numStops[i+1]
 			end
-		end	
-		timeTableData[0][(numTimeTables)*masterFileLength] = nil
-		for i=currentTimeTable, numTimeTables-1 do
-			timeTableData[i] = timeTableData[i+1]
-			numStops[i] = numStops[i+1]
 		end
+		numTimeTables = numTimeTables - 1
+		--currentTimeTable = currentTimeTable - 1
 	end
-	numTimeTables = numTimeTables - 1
-	--currentTimeTable = currentTimeTable - 1
 end
