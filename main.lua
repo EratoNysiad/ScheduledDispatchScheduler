@@ -246,7 +246,11 @@ function love.draw()
 	
 	--textToPrint = editData[1]..','..editData[2]..','..timeTableData[editData[1]][editData[2]]..','..editData[2]%timeTableFileLength
 	--textToPrint = timeTableData[0][currentTimeTable*masterFileLength+6]
-	textToPrint = numTimeTables
+	--textToPrint = numTimeTables
+	textToPrint = ''
+	for i=1, numTimeTables do
+		textToPrint = textToPrint .. "," .. numStops[i]
+	end
 	love.graphics.print(textToPrint.."_", 180, windowHeight-40)
 	
 end

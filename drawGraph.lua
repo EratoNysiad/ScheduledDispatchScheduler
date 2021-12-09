@@ -146,7 +146,7 @@ function drawGraph()
 						currentTime = currentTime + tonumber(timeTableData[n][(i)*timeTableFileLength+4])
 						if thisStation ~= 0 and nextStation ~= 0 then
 							for j=-1, 1 do
-								love.graphics.line( 251+((prevTime+1440*j)*timeWidth), 10+stationPos[i+1], 251+((currentTime+1440*j)*timeWidth), 10+stationPos[i] )
+								love.graphics.line( 251+((prevTime+1440*j)*timeWidth), 10+stationPos[nextStation], 251+((currentTime+1440*j)*timeWidth), 10+stationPos[thisStation] )
 							end
 						end
 						prevTime = currentTime

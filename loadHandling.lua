@@ -70,7 +70,7 @@ function loadTimeTable(i)
 		end
 	end
 	timeTableData[i] = ttFile
-	numStops[i] = (tableX + 1)/timeTableFileLength -1
+	numStops[i] = math.floor(tableX/timeTableFileLength)
 	-- fix stupid bug
 	if timeTableData[0][i*masterFileLength+6] == tostring(1) then
 		timeTableData[0][i*masterFileLength+6] = 1
