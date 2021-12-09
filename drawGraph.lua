@@ -58,6 +58,7 @@ function drawGraph()
 		love.graphics.setColor( 48/255,48/255,48/255)
 		love.graphics.line( 252, 10+stationPos[i], 252+graphX, 10+stationPos[i] )
 	end
+	
 	--Draw lines
 	love.graphics.setLineWidth( 2 )
 	for n=1, numTimeTables do
@@ -150,7 +151,7 @@ function drawGraph()
 						end
 						prevTime = currentTime
 						currentTime = currentTime + tonumber(timeTableData[n][(i)*timeTableFileLength+5])
-						if thisStation ~= 0 or nextStation ~= 0 then
+						if thisStation ~= 0 then
 							for j=-1, 1 do
 								love.graphics.line( 251+((prevTime+1440*j)*timeWidth), 10+stationPos[i], 251+((currentTime+1440*j)*timeWidth), 10+stationPos[i] )
 							end
@@ -163,7 +164,7 @@ function drawGraph()
 			end
 		end
 	end
-		
+	
 	love.graphics.setLineWidth( 1 )
 	
 	--Cover up everything out of bounds
