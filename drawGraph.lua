@@ -37,6 +37,9 @@ function drawGraph()
 	for i=1, numStops[currentTimeTable] do
 		stationPos[i] = math.ceil(stationPos[i]*(graphY-1)/maxDist)--scales it so highest is at graphY
 	end
+	for i=1, numStops[currentTimeTable] do
+		stationPos[i] = stationPos[i] + 1 
+	end
 	local deltaTime = timeLimits[2]-timeLimits[1]
 	if deltaTime <= 0 then
 		deltaTime = 24 + deltaTime
@@ -132,7 +135,11 @@ function drawGraph()
 					end
 					prevTime = currentTime
 					currentTime = currentTime + tonumber(timeTableData[n][(i+1)*timeTableFileLength+3])
-					if thisStation ~= 0 or nextStation ~= 0 then
+					if thisStation ~= 0 and nextStation ~= 0 then
+						for j=-1, 1 do
+							love.graphics.line( 251+((prevTime+1440*j)*timeWidth), 10+stationPos[nextStation], 251+((currentTime+1440*j)*timeWidth), 10+stationPos[nextStation] )
+						end
+					elseif nextStation ~= 0 then
 						for j=-1, 1 do
 							love.graphics.line( 251+((prevTime+1440*j)*timeWidth), 10+stationPos[nextStation], 251+((currentTime+1440*j)*timeWidth), 10+stationPos[nextStation] )
 						end
@@ -153,7 +160,7 @@ function drawGraph()
 						currentTime = currentTime + tonumber(timeTableData[n][(i)*timeTableFileLength+5])
 						if thisStation ~= 0 then
 							for j=-1, 1 do
-								love.graphics.line( 251+((prevTime+1440*j)*timeWidth), 10+stationPos[i], 251+((currentTime+1440*j)*timeWidth), 10+stationPos[i] )
+								love.graphics.line( 251+((prevTime+1440*j)*timeWidth), 10+stationPos[thisStation], 251+((currentTime+1440*j)*timeWidth), 10+stationPos[thisStation] )
 							end
 						end
 					end
