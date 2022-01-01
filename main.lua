@@ -175,9 +175,15 @@ function love.mousepressed(x, y, button)
 				if x >= 150 and x <= 163 then
 					currentTimeTable = currentTimeTable - 1
 					currentTimeTable = isLineOOB(currentTimeTable)
+					if (spaceLimits[2] > numStops[currentTimeTable]) then
+						spaceLimits[2] = 0
+					end
 				elseif x >= 164 and x <= 178 then
 					currentTimeTable = currentTimeTable + 1			
 					currentTimeTable = isLineOOB(currentTimeTable)
+					if (spaceLimits[2] > numStops[currentTimeTable]) then
+						spaceLimits[2] = 0
+					end
 				end
 			end
 			-- Save/load
@@ -251,6 +257,7 @@ function love.draw()
 	for i=1, numTimeTables do
 		textToPrint = textToPrint .. "," .. numStops[i]
 	end
+	textToPrint = spaceLimits[2]
 	love.graphics.print(textToPrint.."_", 180, windowHeight-40)
 	
 end
