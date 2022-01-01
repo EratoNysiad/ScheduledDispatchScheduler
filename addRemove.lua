@@ -72,7 +72,7 @@ function removeTimeTable()
 			end
 		end
 		numTimeTables = numTimeTables - 1
-		if currentTimeTable >= numTimeTables then
+		if currentTimeTable > numTimeTables then
 			currentTimeTable = currentTimeTable - 1
 		end
 	end
