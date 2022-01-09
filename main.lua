@@ -297,7 +297,7 @@ function love.draw()
 		parseWarnings()
 	end
 	
-	textToPrint = editData[1]..','..editData[2]..','..timeTableData[editData[1]][editData[2]]..','..editData[2]%timeTableFileLength
+	--textToPrint = editData[1]..','..editData[2]..','..timeTableData[editData[1]][editData[2]]..','..editData[2]%timeTableFileLength
 	--textToPrint = timeTableData[0][currentTimeTable*masterFileLength+6]
 	--textToPrint = numTimeTables
 	--textToPrint = ''
