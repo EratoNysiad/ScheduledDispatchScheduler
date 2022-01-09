@@ -178,17 +178,29 @@ function love.mousepressed(x, y, button)
 					if (spaceLimits[2] > numStops[currentTimeTable]) then
 						spaceLimits[2] = 0
 					end
+					if (spaceLimits[1] > numStops[currentTimeTable]) then
+						spaceLimits[1] = 0
+					end
 				elseif x >= 164 and x <= 178 then
 					currentTimeTable = currentTimeTable + 1			
 					currentTimeTable = isLineOOB(currentTimeTable)
 					if (spaceLimits[2] > numStops[currentTimeTable]) then
 						spaceLimits[2] = 0
 					end
+					if (spaceLimits[1] > numStops[currentTimeTable]) then
+						spaceLimits[1] = 0
+					end
 				end
 			end
 			-- Save/load
 			if y <= 22 and x >= 89 and x <= 178 then
 				warningID = 1
+				if (spaceLimits[2] > numStops[currentTimeTable]) then
+					spaceLimits[2] = 0
+				end
+				if (spaceLimits[1] > numStops[currentTimeTable]) then
+					spaceLimits[1] = 0
+				end
 				--reloadData()
 			elseif y <= 22 and x <= 88 then
 				saveToFile()
