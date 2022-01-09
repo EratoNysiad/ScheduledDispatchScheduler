@@ -252,6 +252,41 @@ function love.update(dt)
 	backspaceHandler()
 end
 
+function love.keypressed( key, scancode, isrepeat )
+	if scancode == 'up' then
+		if editData[2]%timeTableFileLength <= 3 then
+			if editData[2]-timeTableFileLength > timeTableFileLength-1 then
+				editData[2] = editData[2] - timeTableFileLength
+			end
+		else
+			if editData[2]+timeTableFileLength < timeTableFileLength*(0+numStops[currentTimeTable]) then
+				editData[2] = editData[2] + timeTableFileLength
+			else
+				editData[2] = editData[2] + 4
+			end
+		end
+	elseif scancode == 'down' then
+		if editData[2]%timeTableFileLength <= 3 then
+			if editData[2]+timeTableFileLength < timeTableFileLength*(1+numStops[currentTimeTable]) then
+				editData[2] = editData[2] + timeTableFileLength
+			elseif editData[2]%timeTableFileLength >= 2 then
+				editData[2] = editData[2] - 4
+			end
+		else
+			if editData[2]-timeTableFileLength > timeTableFileLength then
+				editData[2] = editData[2] - timeTableFileLength
+			end
+		end
+	elseif scancode == 'left' then
+		if editData[2]%timeTableFileLength ~= 0 and editData[2]%timeTableFileLength ~= 4 then
+			editData[2] = editData[2] - 1
+		end
+	elseif scancode == 'right' then
+		if editData[2]%timeTableFileLength ~= 3 and editData[2]%timeTableFileLength ~= 5 then
+			editData[2] = editData[2] + 1
+		end
+	end
+end
 
 function love.draw()
 	drawGraph()
@@ -262,14 +297,14 @@ function love.draw()
 		parseWarnings()
 	end
 	
-	--textToPrint = editData[1]..','..editData[2]..','..timeTableData[editData[1]][editData[2]]..','..editData[2]%timeTableFileLength
+	textToPrint = editData[1]..','..editData[2]..','..timeTableData[editData[1]][editData[2]]..','..editData[2]%timeTableFileLength
 	--textToPrint = timeTableData[0][currentTimeTable*masterFileLength+6]
 	--textToPrint = numTimeTables
-	textToPrint = ''
-	for i=1, numTimeTables do
-		textToPrint = textToPrint .. "," .. numStops[i]
-	end
-	textToPrint = spaceLimits[2]
-	love.graphics.print(textToPrint.."_", 180, windowHeight-40)
+	--textToPrint = ''
+	--for i=1, numTimeTables do
+	--	textToPrint = textToPrint .. "," .. numStops[i]
+	--end
+	--textToPrint = spaceLimits[2]
+	--love.graphics.print(textToPrint.."_", 180, windowHeight-40)
 	
 end
