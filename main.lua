@@ -164,10 +164,10 @@ function love.mousepressed(x, y, button)
 			if y >= menuOriginY+61 and y <= menuOriginY+73 then
 				if x >= 154 and x <= 165 then
 					timeTableData[0][currentTimeTable*masterFileLength+2] = timeTableData[0][currentTimeTable*masterFileLength+2] - 1
-					timeTableData[0][currentTimeTable*masterFileLength+2] = tonumber(checkRollover(timeTableData[0][currentTimeTable*masterFileLength+2]-1,16)+1)
+					timeTableData[0][currentTimeTable*masterFileLength+2] = tonumber(checkRollover(timeTableData[0][currentTimeTable*masterFileLength+2]-1,48)+1)
 				elseif x >= 166 and x <= 178 then
 					timeTableData[0][currentTimeTable*masterFileLength+2] = timeTableData[0][currentTimeTable*masterFileLength+2] + 1
-					timeTableData[0][currentTimeTable*masterFileLength+2] = tonumber(checkRollover(timeTableData[0][currentTimeTable*masterFileLength+2]-1,16)+1)
+					timeTableData[0][currentTimeTable*masterFileLength+2] = tonumber(checkRollover(timeTableData[0][currentTimeTable*masterFileLength+2]-1,48)+1)
 				end
 			end
 			-- Change Timetable

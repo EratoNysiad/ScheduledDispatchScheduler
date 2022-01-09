@@ -2,30 +2,70 @@ function love.load()
 	-- initialise game
 	love.window.setMode(720,480, {resizable=true, minwidth=558, minheight=290}) --GBA*3 screensize by default
 	windowWidth, windowHeight = love.window.getMode()
-	love.window.setTitle( "ScheduledDispatchScheduler 1.5" ) --set name
+	love.window.setTitle( "ScheduledDispatchScheduler 1.6" ) --set name
 	--Set font
 	font = love.graphics.newImageFont("font.png", " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789:;<=>?_!\"#$%&'()*+,-./")
 	fontWhite = love.graphics.newImageFont("fontWhite.png", " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789:;<=>?_!\"#$%&'()*+,-./")
 	love.graphics.setFont(font)
 	--Set colours
 	lineColour = {}
-	lineColour[1] = {55/255,119/255,187/255}
-	lineColour[2] = {119/255,163/255,135/255}
-	lineColour[3] = {220/255,131/255,143/255}
-	lineColour[4] = {252/255,212/255,0}
-	lineColour[5] = {252/255,51/255,51/255}
-	lineColour[6] = {115/255,171/255,191/255}
-	lineColour[7] = {107/255,175/255,63/255}
-	lineColour[8] = {127/255,147/255,91/255}
-	lineColour[9] = {87/255,167/255,240/255}
-	lineColour[10] = {212/255,147/255,111/255}
-	lineColour[11] = {131/255,131/255,163/255}
-	lineColour[12] = {139/255,103/255,252/255}
-	lineColour[13] = {252/255,252/255,99/255}
-	lineColour[14] = {183/255,159/255,119/255}
-	lineColour[15] = {147/255,147/255,147/255}
-	lineColour[16] = {216/255,216/255,216/255}
-	lineColourNames = {"Dark Blue", "Pale Green", "Pink", "Yellow", "Red", "Light Blue", "Green", "Dark Green", "Blue", "Cream", "Mauve", "Purple", "Orange", "Brown", "Grey", "White"}
+	---Red
+	lineColour[1] = {255/255,100/255,100/255}
+	lineColour[2] = {255/255,75/255,75/255}
+	lineColour[3] = {255/255,50/255,50/255}
+	lineColour[4] = {235/255,25/255,25/255}
+	lineColour[5] = {200/255,12/255,12/255}
+	lineColour[6] = {165/255,0/255,0/255}
+	---Orange
+	lineColour[7] = {255/255,185/255,90/255}
+	lineColour[8] = {255/255,170/255,50/255}
+	lineColour[9] = {255/255,155/255,0/255}
+	lineColour[10] = {235/255,140/255,0/255}
+	lineColour[11] = {210/255,125/255,0/255}
+	lineColour[12] = {190/255,110/255,0/255}
+	---Yellow
+	lineColour[13] = {255/255,225/255,110/255}
+	lineColour[14] = {255/255,220/255,65/255}
+	lineColour[15] = {255/255,210/255,0/255}
+	lineColour[16] = {230/255,190/255,0/255}
+	lineColour[17] = {210/255,175/255,0/255}
+	lineColour[18] = {200/255,160/255,0/255}
+	---Green
+	lineColour[19] = {140/255,205/255,100/255}
+	lineColour[20] = {125/255,190/255,80/255}
+	lineColour[21] = {110/255,175/255,60/255}
+	lineColour[22] = {90/255,155/255,40/255}
+	lineColour[23] = {75/255,140/255,30/255}
+	lineColour[24] = {60/255,125/255,20/255}
+	---Teal
+	lineColour[25] = {150/255,185/255,200/255}
+	lineColour[26] = {115/255,170/255,190/255}
+	lineColour[27] = {100/255,155/255,175/255}
+	lineColour[28] = {85/255,140/255,160/255}
+	lineColour[29] = {70/255,125/255,140/255}
+	lineColour[30] = {55/255,110/255,130/255}
+	---Blue
+	lineColour[31] = {85/255,150/255,215/255}
+	lineColour[32] = {70/255,135/255,200/255}
+	lineColour[33] = {55/255,120/255,190/255}
+	lineColour[34] = {50/255,105/255,165/255}
+	lineColour[35] = {45/255,95/255,150/255}
+	lineColour[36] = {40/255,85/255,135/255}
+	---Purple
+	lineColour[37] = {185/255,165/255,255/255}
+	lineColour[38] = {160/255,135/255,255/255}
+	lineColour[39] = {140/255,100/255,255/255}
+	lineColour[40] = {120/255,90/255,220/255}
+	lineColour[41] = {110/255,80/255,200/255}
+	lineColour[42] = {90/255,70/255,160/255}
+	---Grey
+	lineColour[43] = {250/255,250/255,250/255}
+	lineColour[44] = {205/255,205/255,205/255}
+	lineColour[45] = {165/255,165/255,165/255}
+	lineColour[46] = {135/255,135/255,135/255}
+	lineColour[47] = {110/255,110/255,110/255}
+	lineColour[48] = {90/255,90/255,90/255}
+	lineColourNames = {"Red 1", "Red 2", "Red 3", "Red 4", "Red 5", "Red 6", "Orange 1", "Orange 2", "Orange 3", "Orange 4", "Orange 5", "Orange 6", "Yellow 1", "Yellow 2", "Yellow 3", "Yellow 4", "Yellow 5", "Yellow 6", "Green 1", "Green 2", "Green 3", "Green 4", "Green 5", "Green 6", "Teal 1", "Teal 2", "Teal 3", "Teal 4", "Teal 5", "Teal 6", "Blue 1", "Blue 2", "Blue 3", "Blue 4", "Blue 5", "Blue 6", "Purple 1", "Purple 2", "Purple 3", "Purple 4", "Purple 5", "Purple 6", "Grey 1", "Grey 2", "Grey 3", "Grey 4", "Grey 5", "Grey 6"}
 	
 	spriteSaveButton = love.graphics.newImage("saveIcon.png")
 	spriteLoadButton = love.graphics.newImage("loadIcon.png")
